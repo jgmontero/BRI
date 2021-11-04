@@ -1,8 +1,8 @@
 <?php
 session_start();
-if (isset($_SESSION['user'])) {
-echo 'Welcome '. $_SESSION['user'];
-}
+/*if (isset($_SESSION['user'])) {
+//echo 'Welcome '. $_SESSION['user'];
+}*/
 
 ?>
 <!DOCTYPE html>
@@ -80,7 +80,7 @@ echo 'Welcome '. $_SESSION['user'];
                     "./backend/customer_auth_destroy_session.php"
                     :
                     "./pages/login-registrer.php" 
-                     ?> > <?php echo isset($_SESSION['user'])  ?  'Logout '.explode('@',$_SESSION['user'])[0] : 'Login?'   ?> </a></li> 
+                     ?> > <?php echo isset($_SESSION['user'])  ?  'Logout '.explode('@',$_SESSION['user'])[0].'?' : 'Login/Register'   ?> </a></li> 
                     
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
@@ -108,31 +108,31 @@ echo 'Welcome '. $_SESSION['user'];
                 <div class="col-xl-2 col-md-4">
                     <div class="icon-box">
                         <i class="ri-store-line"></i>
-                        <h3><a href="">Lorem Ipsum</a></h3>
+                        <h3><a href="">At you service</a></h3>
                     </div>
                 </div>
                 <div class="col-xl-2 col-md-4">
                     <div class="icon-box">
                         <i class="ri-bar-chart-box-line"></i>
-                        <h3><a href="">Dolor Sitema</a></h3>
+                        <h3><a href="">Transparent data</a></h3>
                     </div>
                 </div>
                 <div class="col-xl-2 col-md-4">
                     <div class="icon-box">
                         <i class="ri-calendar-todo-line"></i>
-                        <h3><a href="">Sedare Perspiciatis</a></h3>
+                        <h3><a href="">Always on schedule </a></h3>
                     </div>
                 </div>
                 <div class="col-xl-2 col-md-4">
                     <div class="icon-box">
                         <i class="ri-paint-brush-line"></i>
-                        <h3><a href="">Magni Dolores</a></h3>
+                        <h3><a href="">Excellent treatment</a></h3>
                     </div>
                 </div>
                 <div class="col-xl-2 col-md-4">
                     <div class="icon-box">
                         <i class="ri-database-2-line"></i>
-                        <h3><a href="">Nemos Enimade</a></h3>
+                        <h3><a href="">Data management</a></h3>
                     </div>
                 </div>
             </div>
