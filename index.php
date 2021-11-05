@@ -43,7 +43,7 @@ session_start();
     <header id="header" class="fixed-top ">
         <div class="container d-flex align-items-center justify-content-lg-between">
 
-            <h1 class="logo me-auto me-lg-0"><a href="index.html">BRI<span>.</span></a></h1>
+            <h1 class="logo me-auto me-lg-0"><a href="index.php">BRI<span>.</span></a></h1>
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -52,7 +52,7 @@ session_start();
                     <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
                     <li><a class="nav-link scrollto" href="#about">About</a></li>
                     <li><a class="nav-link scrollto" href="#services">Services</a></li>
-                    <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
+                    <li><a class="nav-link scrollto " href="#studies">Studies</a></li>
                     <li><a class="nav-link scrollto" href="#team">Team</a></li>
                     <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
@@ -71,17 +71,16 @@ session_start();
                             <li><a href="#">Drop Down 4</a></li>
                         </ul>
                     </li>
-                    <li><a class="nav-link scrollto" href="#contact">Contact</a></li> 
-                    
-                    
-                    <li><a class="nav-link scrollto" href=<?php 
-                    echo  isset($_SESSION['user'])
-                    ?
-                    "./backend/customer_auth_destroy_session.php"
-                    :
-                    "./pages/login-registrer.php" 
-                     ?> > <?php echo isset($_SESSION['user'])  ?  'Logout '.explode('@',$_SESSION['user'])[0].'?' : 'Login/Register'   ?> </a></li> 
-                    
+                    <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+
+
+                    <li><a class="nav-link scrollto" href=<?php
+                                                            echo  isset($_SESSION['user'])
+                                                                ?
+                                                                "./backend/customer_auth_destroy_session.php"
+                                                                : "./pages/login-registrer.php"
+                                                            ?>> <?php echo isset($_SESSION['user'])  ?  'Logout ' . explode('@', $_SESSION['user'])[0] . '?' : 'Login/Register'   ?> </a></li>
+
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav>
@@ -306,154 +305,103 @@ session_start();
         <!-- End Cta Section -->
 
         <!-- ======= Portfolio Section ======= -->
-        <section id="portfolio" class="portfolio">
+        <section id="studies" class="portfolio">
             <div class="container" data-aos="fade-up">
 
                 <div class="section-title">
-                    <h2>Portfolio</h2>
-                    <p>Check our Portfolio</p>
+                    <h2>Studies</h2>
+                    <p>Check our studies</p>
                 </div>
-
-                <div class="row" data-aos="fade-up" data-aos-delay="100">
-                    <div class="col-lg-12 d-flex justify-content-center">
+                <div className="row" data-aos="fade-up" data-aos-delay={100}>
+                    <div className="col-lg-12 d-flex justify-content-center">
                         <ul id="portfolio-flters">
-                            <li data-filter="*" class="filter-active">All</li>
-                            <li data-filter=".filter-app">App</li>
-                            <li data-filter=".filter-card">Card</li>
-                            <li data-filter=".filter-web">Web</li>
+                            <li data-target="*" className="target-active">All</li>
+                            <li data-target="lotsd"> More 30 days to start</li>
+                            <li data-target="30d"> Less 30 days to start</li>
+                            <li data-target="20d">Less 20 days to start</li>
+                            <li data-target="10d">Less 10 days to start</li>
+                            <li data-target="5d">Less 5 days to start</li>
+                            <li data-target="started">Already started</li>
+                            <li data-target="ended">Ended</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+                    <div class="studies">
+                        <?php
+                        include "./backend/db_connection.php";
 
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                        <div class="portfolio-wrap">
-                            <img src="assets/img/portfolio/portfolio-1.jpg" class="img-fluid" alt="">
-                            <div class="portfolio-info">
-                                <h4>App 1</h4>
-                                <p>App</p>
-                                <div class="portfolio-links">
-                                    <a href="assets/img/portfolio/portfolio-1.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1"><i class="bx bx-plus"></i></a>
-                                    <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
+                        $sql = "SELECT *,(DATEDIFF( `start_date`,now())) as days_to_start ,
+                 (DATEDIFF(now(), `end_date`)) as days_to_end 
+                 FROM `studies` WHERE 1 order by days_to_start  ";
+                        $resultSet = mysqli_query($connection, $sql);
+                        // print_r(mysqli_fetch_all($resultSet));die;
+                        while ($row = mysqli_fetch_row($resultSet)) {
+
+                            ?>
+                            <div>
+                                <div class="portfolio-item <?php
+                                                                if ($row[19] > 30) {
+                                                                    echo "card bg-light mb-3";
+                                                                } else if ($row[19] <= 30 && $row[19] > 20) {
+                                                                    echo "card bg-info mb-3";
+                                                                } else if ($row[19] <= 20 && $row[19] > 10) {
+                                                                    echo "card bg-primary mb-3";
+                                                                } else if ($row[19] <= 10 && $row[19] > 5) {
+                                                                    echo "card bg-warning  mb-3";
+                                                                } else if ($row[19] <= 5 && $row[19] > 0) {
+                                                                    echo "card bg-danger mb-3";
+                                                                } else if ($row[19] <= 0 && $row[20] >= 0) {
+                                                                    echo "card bg-success mb-3";
+                                                                } else if ($row[19] <= 0 & $row[20] <= 0) {
+                                                                    echo "card bg-dark mb-3";
+                                                                }
+                                                                ?>" style="width: 18rem;" data-id="<?php
+                                                                                                        if ($row[19] > 30) {
+                                                                                                            echo "lotsd";
+                                                                                                        } else if ($row[19] <= 30 && $row[19] > 20) {
+                                                                                                            echo "30d";
+                                                                                                        } else if ($row[19] <= 20 && $row[19] > 10) {
+                                                                                                            echo "20d";
+                                                                                                        } else if ($row[19] <= 10 && $row[19] > 5) {
+                                                                                                            echo "10d";
+                                                                                                        } else if ($row[19] <= 5 && $row[19] > 0) {
+                                                                                                            echo "5d";
+                                                                                                        } else if ($row[19] <= 0 && $row[20] >= 0) {
+                                                                                                            echo "started";
+                                                                                                        } else if ($row[19] <= 0 & $row[20] <= 0) {
+                                                                                                            echo "ended";
+                                                                                                        }
+                                                                                                        ?>">
+
+                                    <div class="card-body">
+                                        <h5 class="card-title"><?php echo  $row[1]; ?></h5>
+                                        <p class="card-text">
+                                            <?php echo  $row[12]; ?>
+                                        </p>
+                                    </div>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item"> Days left to start: <?php echo $row[19]; ?></li>
+                                        <li class="list-group-item"> <?php echo $row[2] . '/' . $row[3]; ?></li>
+                                        <li class="list-group-item"><?php echo '$' . $row[7]; ?></li>
+                                        <li class="list-group-item">Age: <?php echo "from " . $row[10] . " to " . $row[11] . " years old"; ?></li>
+                                        <li class="list-group-item"> Location: <?php echo $row[15]; ?></li>
+                                    </ul>
+                                    <div class="card-body">
+                                        <a href="#" class="card-link">Card link</a>
+                                        <a href="#" class="card-link">Another link</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-                        <div class="portfolio-wrap">
-                            <img src="assets/img/portfolio/portfolio-2.jpg" class="img-fluid" alt="">
-                            <div class="portfolio-info">
-                                <h4>Web 3</h4>
-                                <p>Web</p>
-                                <div class="portfolio-links">
-                                    <a href="assets/img/portfolio/portfolio-2.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a>
-                                    <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                        <div class="portfolio-wrap">
-                            <img src="assets/img/portfolio/portfolio-3.jpg" class="img-fluid" alt="">
-                            <div class="portfolio-info">
-                                <h4>App 2</h4>
-                                <p>App</p>
-                                <div class="portfolio-links">
-                                    <a href="assets/img/portfolio/portfolio-3.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 2"><i class="bx bx-plus"></i></a>
-                                    <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-                        <div class="portfolio-wrap">
-                            <img src="assets/img/portfolio/portfolio-4.jpg" class="img-fluid" alt="">
-                            <div class="portfolio-info">
-                                <h4>Card 2</h4>
-                                <p>Card</p>
-                                <div class="portfolio-links">
-                                    <a href="assets/img/portfolio/portfolio-4.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 2"><i class="bx bx-plus"></i></a>
-                                    <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-                        <div class="portfolio-wrap">
-                            <img src="assets/img/portfolio/portfolio-5.jpg" class="img-fluid" alt="">
-                            <div class="portfolio-info">
-                                <h4>Web 2</h4>
-                                <p>Web</p>
-                                <div class="portfolio-links">
-                                    <a href="assets/img/portfolio/portfolio-5.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 2"><i class="bx bx-plus"></i></a>
-                                    <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                        <div class="portfolio-wrap">
-                            <img src="assets/img/portfolio/portfolio-6.jpg" class="img-fluid" alt="">
-                            <div class="portfolio-info">
-                                <h4>App 3</h4>
-                                <p>App</p>
-                                <div class="portfolio-links">
-                                    <a href="assets/img/portfolio/portfolio-6.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 3"><i class="bx bx-plus"></i></a>
-                                    <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-                        <div class="portfolio-wrap">
-                            <img src="assets/img/portfolio/portfolio-7.jpg" class="img-fluid" alt="">
-                            <div class="portfolio-info">
-                                <h4>Card 1</h4>
-                                <p>Card</p>
-                                <div class="portfolio-links">
-                                    <a href="assets/img/portfolio/portfolio-7.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 1"><i class="bx bx-plus"></i></a>
-                                    <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-                        <div class="portfolio-wrap">
-                            <img src="assets/img/portfolio/portfolio-8.jpg" class="img-fluid" alt="">
-                            <div class="portfolio-info">
-                                <h4>Card 3</h4>
-                                <p>Card</p>
-                                <div class="portfolio-links">
-                                    <a href="assets/img/portfolio/portfolio-8.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 3"><i class="bx bx-plus"></i></a>
-                                    <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-                        <div class="portfolio-wrap">
-                            <img src="assets/img/portfolio/portfolio-9.jpg" class="img-fluid" alt="">
-                            <div class="portfolio-info">
-                                <h4>Web 3</h4>
-                                <p>Web</p>
-                                <div class="portfolio-links">
-                                    <a href="assets/img/portfolio/portfolio-9.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a>
-                                    <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-                                </div>
-                            </div>
-                        </div>
+                        <?php
+                        }
+                        ?>
                     </div>
 
                 </div>
+
 
             </div>
         </section>
@@ -849,7 +797,6 @@ session_start();
 
     <!-- Template Main JS File -->
     <script src="./assets/js/main.js"></script>
-
 </body>
 
 </html>

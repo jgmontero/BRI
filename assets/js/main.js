@@ -4,7 +4,7 @@
 * Author: BootstrapMade.com
 * License: https://bootstrapmade.com/license/
 */
-(function() {
+(function () {
   "use strict";
 
   /**
@@ -109,7 +109,7 @@
   /**
    * Mobile nav toggle
    */
-  on('click', '.mobile-nav-toggle', function(e) {
+  on('click', '.mobile-nav-toggle', function (e) {
     select('#navbar').classList.toggle('navbar-mobile')
     this.classList.toggle('bi-list')
     this.classList.toggle('bi-x')
@@ -118,7 +118,7 @@
   /**
    * Mobile nav dropdowns activate
    */
-  on('click', '.navbar .dropdown > a', function(e) {
+  on('click', '.navbar .dropdown > a', function (e) {
     if (select('#navbar').classList.contains('navbar-mobile')) {
       e.preventDefault()
       this.nextElementSibling.classList.toggle('dropdown-active')
@@ -128,7 +128,7 @@
   /**
    * Scrool with ofset on links with a class name .scrollto
    */
-  on('click', '.scrollto', function(e) {
+  on('click', '.scrollto', function (e) {
     if (select(this.hash)) {
       e.preventDefault()
 
@@ -203,36 +203,73 @@
   /**
    * Porfolio isotope and filter
    */
+
   window.addEventListener('load', () => {
-    let portfolioContainer = select('.portfolio-container');
-    if (portfolioContainer) {
-      let portfolioIsotope = new Isotope(portfolioContainer, {
-        itemSelector: '.portfolio-item'
-      });
+    const filter = document.querySelector("#portfolio-flters").children;
+    const items = document.querySelector(".studies").children;
+    for (let i = 0; i < filter.length; i++) {
+      filter[i].addEventListener("click", function () {
+        for (let j = 0; j < filter.length; j++) {
+          filter[j].classList.remove("active")
+        }
+        this.classList.add("active");
+        const target = this.getAttribute("data-target");
 
-      let portfolioFilters = select('#portfolio-flters li', true);
+        for (let k = 0; k < items.length; k++) {
 
-      on('click', '#portfolio-flters li', function(e) {
-        e.preventDefault();
-        portfolioFilters.forEach(function(el) {
-          el.classList.remove('filter-active');
-        });
-        this.classList.add('filter-active');
-
-        portfolioIsotope.arrange({
-          filter: this.getAttribute('data-filter')
-        });
-        portfolioIsotope.on('arrangeComplete', function() {
-          AOS.refresh()
-        });
-      }, true);
+          if (target == items[k].children[0].getAttribute("data-id")) {
+            items[k].style.display = "flex";
+          } else if (target == "*") {
+            items[k].style.display = "flex";
+          } else {
+            items[k].style.display = "none";
+          }
+        }
+      })
     }
 
   });
 
+  
+    window.addEventListener('load', () => {
+      let portfolioContainer = select('.portfolio-container');
+      
+      if (portfolioContainer) {
+        let portfolioIsotope = new Isotope(portfolioContainer, {
+          itemSelector: '.portfolio-item'
+        });
+  
+        let portfolioFilters = select('#portfolio-flters li', true);
+  
+        on('click', '#portfolio-flters li', function(e) {
+          e.preventDefault();
+          portfolioFilters.forEach(function(el) {
+            //console.log(el);
+            el.classList.remove('filter-active');
+            //console.log(el);
+          });
+          //console.log(portfolioFilters);
+  
+          this.classList.add('filter-active');  
+  
+          //console.log(this);
+  
+          portfolioIsotope.arrange({
+            filter: this.getAttribute('data-filter')
+          });
+          //console.log(portfolioIsotope);
+          portfolioIsotope.on('arrangeComplete', function() {
+            AOS.refresh()
+          });
+        }, true);
+      }
+  
+    });
+   
+
   /**
-   * Initiate portfolio lightbox 
-   */
+     * Initiate portfolio lightbox 
+     */
   const portfolioLightbox = GLightbox({
     selector: '.portfolio-lightbox'
   });
