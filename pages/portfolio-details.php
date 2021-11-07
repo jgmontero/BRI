@@ -1,5 +1,17 @@
 <?php
 session_start();
+include "../backend/db_connection.php";
+
+$study_pk = $_POST['study_pk'];
+$sql = "SELECT *,(DATEDIFF( `start_date`,now())) as days_to_start ,
+                 (DATEDIFF(now(), `end_date`)) as days_to_end 
+                 FROM `studies` WHERE pk_studies='{$study_pk}' order by days_to_start  ";
+//print_r($sql);die;
+$resultSet = mysqli_query($connection, $sql);
+// print_r(mysqli_fetch_all($resultSet));
+$row = mysqli_fetch_row($resultSet);
+
+
 /*if (isset($_SESSION['user'])) {
 echo 'Welcome '. $_SESSION['user'];
 }*/
@@ -50,7 +62,7 @@ echo 'Welcome '. $_SESSION['user'];
     <header id="header" class="fixed-top header-inner-pages">
         <div class="container d-flex align-items-center justify-content-lg-between">
 
-            <h1 class="logo me-auto me-lg-0"><a href="index.html">BRI<span>.</span></a></h1>
+            <h1 class="logo me-auto me-lg-0"><a href="../index.php">BRI<span>.</span></a></h1>
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -114,44 +126,52 @@ echo 'Welcome '. $_SESSION['user'];
 
                 <div class="row gy-4">
 
-                    <div class="col-lg-8">
-                        <div class="portfolio-details-slider swiper">
-                            <div class="swiper-wrapper align-items-center">
-
-                                <div class="swiper-slide">
-                                    <img src="assets/img/portfolio/portfolio-1.jpg" alt="">
-                                </div>
-
-                                <div class="swiper-slide">
-                                    <img src="assets/img/portfolio/portfolio-2.jpg" alt="">
-                                </div>
-
-                                <div class="swiper-slide">
-                                    <img src="assets/img/portfolio/portfolio-3.jpg" alt="">
-                                </div>
-
-                            </div>
-                            <div class="swiper-pagination"></div>
-                        </div>
-                    </div>
-
                     <div class="col-lg-4">
                         <div class="portfolio-info">
-                            <h3>Project information</h3>
+
+                            <h3><?php echo $row[1]; ?></h3>
                             <ul>
-                                <li><strong>Category</strong>: Web design</li>
-                                <li><strong>Client</strong>: ASU Company</li>
-                                <li><strong>Project date</strong>: 01 March, 2020</li>
-                                <li><strong>Project URL</strong>: <a href="#">www.example.com</a></li>
+                                <li><strong>Start date</strong>: <?php echo $row[2]; ?></li>
+                                <li><strong>Finish date</strong>: <?php echo $row[3]; ?></li>
+                                <li><strong>Status</strong><?php if ($row[19] <= 0 && $row[20] >= 0) {
+                                                                echo " Started ";
+                                                            } else if ($row[19] <= 0 & $row[20] <= 0) {
+                                                                echo " Ended";
+                                                            } else {
+                                                                echo " Starts in " . $row[19] . " days";
+                                                            } ?></li>
+                                <li><strong>Requierement</strong>: <?php echo $row[6]; ?>></li>
+                                <li><strong>Payment</strong>: $<?php echo $row[7]; ?></li>
+                                <li><strong>Weight restriction </strong>: <?php echo $row[8]; ?></li>
+                                <li><strong>Minimum age </strong>: <?php echo $row[10]; ?></li>
+                                <li><strong>Maximum age </strong>: <?php echo $row[11]; ?></li>
+                                <li><strong>Route of administration </strong>: <?php echo $row[13]; ?></li>
+                                <li><strong>Blood draws</strong>: <?php echo $row[14]; ?></li>
+                                <li><strong>Location </strong>: <?php echo $row[15]; ?></li>
+                                <li><strong>Schedule </strong>: <?php echo $row[16]; ?></li>
+                                <li><strong>Study length </strong>: <?php echo $row[17]; ?></li>
                             </ul>
                         </div>
                         <div class="portfolio-description">
-                            <h2>This is an example of portfolio detail</h2>
+                            <h2>Indications</h2>
                             <p>
-                                Autem ipsum nam porro corporis rerum. Quis eos dolorem eos itaque inventore commodi labore quia quia. Exercitationem repudiandae officiis neque suscipit non officia eaque itaque enim. Voluptatem officia accusantium nesciunt est omnis tempora consectetur
-                                dignissimos. Sequi nulla at esse enim cum deserunt eius.
+                                <?php echo $row[12]; ?>
                             </p>
+
                         </div>
+                        <?php
+                        $email = $_SESSION['user'];
+                        $svrkey = $row[0];
+                        $verify_subscription = mysqli_query($connection, "SELECT * 
+                        from customer_studies 
+                        where email = '$email' and svrkey = '$svrkey'");
+                        ?>
+                        <form method="post" action="../backend/un_subscribe.php">
+                            <input type="hidden" style="cursor: pointer;" name="email" value="<?php echo $email; ?>" />
+                            <input type="hidden" style="cursor: pointer;" name="svrkey" value="<?php echo $svrkey; ?>" />
+                            <a style="cursor: pointer;" onclick="this.parentNode.submit();"><?php echo (mysqli_num_rows($verify_subscription) > 0)  ?  'Unsubscribe' : 'Subscribe'   ?></a>
+                        </form>
+
                     </div>
 
                 </div>
@@ -227,7 +247,7 @@ echo 'Welcome '. $_SESSION['user'];
                 &copy; Copyright <strong><span>BRI</span></strong>. All Rights Reserved
             </div>
             <div class="credits">
-    
+
             </div>
         </div>
     </footer>
@@ -237,13 +257,13 @@ echo 'Welcome '. $_SESSION['user'];
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
     <!-- Vendor JS Files -->
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
-    <script src="assets/vendor/purecounter/purecounter.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="../assets/vendor/aos/aos.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="../assets/vendor/php-email-form/validate.js"></script>
+    <script src="../assets/vendor/purecounter/purecounter.js"></script>
+    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
 
     <!-- Template Main JS File -->
     <script src="../assets/js/main.js"></script>

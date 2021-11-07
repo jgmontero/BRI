@@ -1,5 +1,6 @@
 <?php
 session_start();
+include "./backend/db_connection.php";
 /*if (isset($_SESSION['user'])) {
 //echo 'Welcome '. $_SESSION['user'];
 }*/
@@ -54,23 +55,24 @@ session_start();
                     <li><a class="nav-link scrollto" href="#services">Services</a></li>
                     <li><a class="nav-link scrollto " href="#studies">Studies</a></li>
                     <li><a class="nav-link scrollto" href="#team">Team</a></li>
-                    <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+                    <?php
+                    $user = $_SESSION['user'];
+                    $sql = "SELECT * FROM `customers` WHERE email = '{$user}' ";
+                    $resultSet = mysqli_query($connection, $sql);
+                    $row = mysqli_fetch_row($resultSet);
+                    if($row[18]=='1'){
+
+                   
+                    ?>
+                    <li class="dropdown"><a href="#"><span>Management</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
-                            <li><a href="#">Dropdown 1</a></li>
-                            <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                                <ul>
-                                    <li><a href="#">Deep Drop Down 1</a></li>
-                                    <li><a href="#">Deep Drop Down 2</a></li>
-                                    <li><a href="#">Deep Drop Down 3</a></li>
-                                    <li><a href="#">Deep Drop Down 4</a></li>
-                                    <li><a href="#">Deep Drop Down 5</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#">Drop Down 2</a></li>
-                            <li><a href="#">Drop Down 3</a></li>
-                            <li><a href="#">Drop Down 4</a></li>
+                            <li><a href="./pages/courses_page.php">Courses management</a></li>
+                            <li><a href="./pages/user_management">User Management</a></li>
                         </ul>
                     </li>
+                    <?php 
+                    }
+                    ?>
                     <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
 
 
@@ -317,9 +319,9 @@ session_start();
                         <ul id="portfolio-flters">
                             <li data-target="*" className="target-active">All</li>
                             <li data-target="lotsd"> More 30 days to start</li>
-                            <li data-target="30d"> Less 30 days to start</li>
-                            <li data-target="20d">Less 20 days to start</li>
-                            <li data-target="10d">Less 10 days to start</li>
+                            <li data-target="30d"> Between 30 and 20 days to start</li>
+                            <li data-target="20d">Between 20 days and 10 to start</li>
+                            <li data-target="10d">Between 10 and 5 days to start</li>
                             <li data-target="5d">Less 5 days to start</li>
                             <li data-target="started">Already started</li>
                             <li data-target="ended">Ended</li>
@@ -330,7 +332,6 @@ session_start();
                 <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
                     <div class="studies">
                         <?php
-                        include "./backend/db_connection.php";
 
                         $sql = "SELECT *,(DATEDIFF( `start_date`,now())) as days_to_start ,
                  (DATEDIFF(now(), `end_date`)) as days_to_end 
@@ -389,12 +390,17 @@ session_start();
                                         <li class="list-group-item"> Location: <?php echo $row[15]; ?></li>
                                     </ul>
                                     <div class="card-body">
-                                        <a class="card-link" href=<?php
-                                                            echo  isset($_SESSION['user'])
-                                                                ?
-                                                                "./pages/portfolio-details.php"
-                                                                : "./pages/login-registrer.php"
-                                                            ?>> <?php echo isset($_SESSION['user'])  ?  'Subscribe?' : 'Login/Register first'   ?> </a>
+
+                                        <form method="post" action=<?php
+                                                                        echo  isset($_SESSION['user'])
+                                                                            ?
+                                                                            "./pages/portfolio-details.php"
+                                                                            : "./pages/login-registrer.php"
+                                                                        ?>>
+                                            <input type="hidden" style="cursor: pointer;" name="study_pk" value="<?php echo $row[18]; ?>" />
+                                            <a style="cursor: pointer;" onclick="this.parentNode.submit();"><?php echo isset($_SESSION['user'])  ?  'Details' : 'Login/Register first'   ?></a>
+                                        </form>
+
                                     </div>
                                 </div>
                             </div>
