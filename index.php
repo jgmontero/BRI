@@ -56,6 +56,9 @@ include "./backend/db_connection.php";
                     <li><a class="nav-link scrollto " href="#studies">Studies</a></li>
                     <li><a class="nav-link scrollto" href="#team">Team</a></li>
                     <?php
+                    if (isset($_SESSION['user'])) {
+                       
+                       
                     $user = $_SESSION['user'];
                     $sql = "SELECT * FROM `customers` WHERE email = '{$user}' ";
                     $resultSet = mysqli_query($connection, $sql);
@@ -71,6 +74,7 @@ include "./backend/db_connection.php";
                         </ul>
                     </li>
                     <?php 
+                     }
                     }
                     ?>
                     <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
@@ -317,14 +321,14 @@ include "./backend/db_connection.php";
                 <div className="row" data-aos="fade-up" data-aos-delay={100}>
                     <div className="col-lg-12 d-flex justify-content-center">
                         <ul id="portfolio-flters">
-                            <li data-target="*" className="target-active">All</li>
-                            <li data-target="lotsd"> More 30 days to start</li>
-                            <li data-target="30d"> Between 30 and 20 days to start</li>
-                            <li data-target="20d">Between 20 days and 10 to start</li>
-                            <li data-target="10d">Between 10 and 5 days to start</li>
-                            <li data-target="5d">Less 5 days to start</li>
-                            <li data-target="started">Already started</li>
-                            <li data-target="ended">Ended</li>
+                            <li data-target="*" data-aos="fade-up" data-aos-delay={100} className="target-active">All</li>
+                            <li data-target="lotsd" data-aos="fade-up" data-aos-delay={100}> More 30 days to start</li>
+                            <li data-target="30d" data-aos="fade-up" data-aos-delay={100}> Between 30 and 20 days to start</li>
+                            <li data-target="20d" data-aos="fade-up" data-aos-delay={100}>Between 20 days and 10 to start</li>
+                            <li data-target="10d" data-aos="fade-up" data-aos-delay={100}>Between 10 and 5 days to start</li>
+                            <li data-target="5d" data-aos="fade-up" data-aos-delay={100}>Less 5 days to start</li>
+                            <li data-target="started" data-aos="fade-up" data-aos-delay={100}>Already started</li>
+                            <li data-target="ended" data-aos="fade-up" data-aos-delay={100}>Ended</li>
                         </ul>
                     </div>
                 </div>
