@@ -337,8 +337,11 @@ function submitFormDelete(form) {
         title: "Are you sure?",
         text: "This row will be deleted",
         icon: "warning",
+        closeOnClickOutside: false,
         buttons: true,
         dangerMode: true,
+        closeOnEsc: false,
+
     })
         .then((isOkay) => {
             if (isOkay) {
@@ -347,14 +350,15 @@ function submitFormDelete(form) {
         });
     return false;
 }
-function submitFormUpt(row) {
-    console.log(row);
+
+function submitFormUpt(form) {
+    // console.log(form);
+
     swal({
-        title: "Are you sure?",
-        text: "This row will be updated",
-        icon: "success",
+        title: "Change the desired values",
+        text: "This row will be Updated",
+        icon: "info",
         buttons: true,
-        dangerMode: true,
     })
         .then((isOkay) => {
             if (isOkay) {
@@ -362,4 +366,154 @@ function submitFormUpt(row) {
             }
         });
     return false;
+}
+
+function Uptstudy(form) {
+    // console.log(form);
+
+    swal({
+        title: "Update study",
+        text: "This study will be Updated",
+        icon: "info",
+        buttons: true,
+    })
+        .then((isOkay) => {
+            if (isOkay) {
+                form.submit();
+            }
+        });
+    return false;
+}
+
+function submitFormAdd(form) {
+    //   console.log(form);
+
+    swal({
+        title: "Do you want to add a new study?",
+        text: "A new study will be added",
+        icon: "info",
+        buttons: true,
+    })
+        .then((isOkay) => {
+            if (isOkay) {
+                form.submit();
+            }
+        });
+    return false;
+}
+
+function Addstudy(form) {
+    //   console.log(form);
+
+    swal({
+        title: "Do you want to add a new study with this data?",
+        text: "A new study will be added",
+        icon: "info",
+        buttons: true,
+    })
+        .then((isOkay) => {
+            if (isOkay) {
+                form.submit();
+            }
+        });
+    return false;
+}
+
+function StartDateRangeToggle() {
+    // div container ranged date
+    var s_date_range = document.getElementById("s_date_range");
+    // ranged date inputs for reset on display none
+    var s_date_range_min_input = document.getElementById("s_date_range_min_input");
+    var s_date_range_max_input = document.getElementById("s_date_range_max_input");
+
+    // div container no ranged date
+    var s_date_no_range = document.getElementById("s_date_no_range");
+    // no ranged date inputs for reset on display none
+    var s_date_no_range_input = document.getElementById("s_date_no_range_input");
+
+    var checboxrange = document.getElementById("is_start_range");
+
+    if (checboxrange.checked) {
+        s_date_range.style.display = "block";
+        s_date_no_range.style.display = "none";
+        s_date_no_range_input.value = "";
+
+    } else {
+        s_date_range.style.display = "none";
+        s_date_range_min_input.value = "";
+        s_date_range_max_input.value = "";
+        s_date_no_range.style.display = "block";
+    }
+}
+
+function EndDateRangeToggle() {
+    // div container ranged date
+    var e_date_range = document.getElementById("e_date_range");
+    // ranged date inputs for reset on display none
+    var e_date_range_min_input = document.getElementById("e_date_range_min_input");
+    var e_date_range_max_input = document.getElementById("e_date_range_max_input");
+    // div container no ranged date
+    var e_date_no_range = document.getElementById("e_date_no_range");
+    // no ranged date inputs for reset on display none
+    var e_date_no_range_input = document.getElementById("e_date_no_range_input");
+
+
+    var checboxrange = document.getElementById("is_end_range");
+    if (checboxrange.checked) {
+        e_date_range.style.display = "block";
+        e_date_no_range.style.display = "none";
+        e_date_no_range_input.value = "";
+    } else {
+        e_date_range.style.display = "none";
+        e_date_no_range.style.display = "block";
+        e_date_range_min_input.value = "";
+        e_date_range_max_input.value = "";
+    }
+}
+
+function StipendRangeToggle() {
+    // div container ranged stipend
+    var stipend_range = document.getElementById("stipend_range");
+    // ranged stipend inputs for reset on display none
+    var stipend_range_min_input = document.getElementById("stipend_range_min_input");
+    var stipend_range_max_input = document.getElementById("stipend_range_max_input");
+    // div container no ranged stipend
+    var stipend_no_range = document.getElementById("stipend_no_range");
+    // no ranged stipend inputs for reset on display none
+    var stipend_input = document.getElementById("stipend_input");
+
+
+    var checboxrange = document.getElementById("is_stipend_range");
+    if (checboxrange.checked) {
+        stipend_range.style.display = "block";
+        stipend_no_range.style.display = "none";
+        stipend_input.value = "";
+    } else {
+        stipend_range.style.display = "none";
+        stipend_no_range.style.display = "block";
+        stipend_range_min_input.value = "";
+        stipend_range_max_input.value = "";
+    }
+}
+
+function Clearfilter() {
+    document.getElementById("title").value= "";
+    document.getElementById("min_age").value = "";
+    document.getElementById("max_age").value = "";
+    // start date range inputs
+    document.getElementById("s_date_range_min_input").value = "";
+    document.getElementById("s_date_range_max_input").value = "";
+    // no ranged start date inputs for reset on display none
+    document.getElementById("s_date_no_range_input").value = "";
+    // ranged end date inputs for reset on display none
+    document.getElementById("e_date_range_min_input").value = "";
+    document.getElementById("e_date_range_max_input").value = "";
+    // no ranged end date inputs for reset on display none
+    document.getElementById("e_date_no_range_input").value = "";
+    //ranged stipend
+    document.getElementById("stipend_range_min_input").value = "";
+    document.getElementById("stipend_range_max_input").value = "";
+    // no ranged stipend inputs for reset on display none
+    document.getElementById("stipend_input").value = "";
+   // window.location = "../pages/courses_pages.php";
 }

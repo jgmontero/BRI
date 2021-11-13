@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "../backend/db_connection.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -47,29 +48,6 @@ include "../backend/db_connection.php";
 </head>
 
 <body>
-<div>
-    <div class="modal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
-                    <button type="button" class="btn-close"
-                            data-bs-dismiss="modal" aria-label="Close">
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Modal body</p>
-                </div>
-                <div class="modal-footer"
-                <button type="button" class="btn btn-secondary"
-                        data-bs-dismiss="modal">Close
-                </button>
-                <button type="button" class="btn btn-primary">Save changes
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 <!-- ======= Header ======= -->
 <header id="header" class="fixed-top header-inner-pages">
     <div class="container d-flex align-items-center justify-content-lg-between">
@@ -127,8 +105,197 @@ include "../backend/db_connection.php";
     </section><!-- End Breadcrumbs -->
 
     <section class="inner-page">
-        <div class="container" style="margin-left: 1px;">
+        <?php
+        $sql = "SELECT * FROM `studies` ";
+        $where = " where 1 ";
+        //title filter
+        if (!empty($_POST['title'])) {
+            $title = $_POST['title'];
+            $where .= " and lower(title) LIKE lower('%{$title}%') ";
+        }
+        //start date filter
+        if (!empty($_POST['s_date']) && empty($_POST['s_date_min']) && empty($_POST['s_date_max'])) {
+            $s_date = $_POST['s_date'];
+            $where .= " and start_date >=  '{$s_date}'";
+        } else if (empty($_POST['s_date']) && !empty($_POST['s_date_min']) && !empty($_POST['s_date_max'])) {
+            $s_date_min = $_POST['s_date_min'];
+            $s_date_max = $_POST['s_date_max'];
+            $where .= " and start_date BETWEEN  '{$s_date_min}' AND   '{$s_date_max}'";
+        } else if (empty($_POST['s_date']) && !empty($_POST['s_date_min']) && empty($_POST['s_date_max'])) {
+            $s_date_min = $_POST['s_date_min'];
+            $where .= " and start_date >=  '{$s_date_min}'";
+        } else if (empty($_POST['s_date']) && empty($_POST['s_date_min']) && !empty($_POST['s_date_max'])) {
+            $s_date_max = $_POST['s_date_max'];
+            $where .= " and start_date  <=  '{$s_date_max}'";
+        }
+        //end date filter (to do: check it)
+        if (!empty($_POST['e_date']) && empty($_POST['e_date_min']) && empty($_POST['e_date_max'])) {
+            $s_date = $_POST['e_date'];
+            $where .= " and end_date <=  '{$s_date}'";
+        } else if (empty($_POST['e_date']) && !empty($_POST['e_date_min']) && !empty($_POST['e_date_max'])) {
+            $s_date_min = $_POST['e_date_min'];
+            $s_date_max = $_POST['e_date_max'];
+            $where .= " and end_date BETWEEN  '{$s_date_min}' AND   '{$s_date_max}'";
+        } else if (empty($_POST['e_date']) && !empty($_POST['e_date_min']) && empty($_POST['e_date_max'])) {
+            $s_date_min = $_POST['e_date_min'];
+            $where .= " and end_date >=  '{$s_date_min}'";
+        } else if (empty($_POST['e_date']) && empty($_POST['e_date_min']) && !empty($_POST['e_date_max'])) {
+            $s_date_max = $_POST['e_date_max'];
+            $where .= " and end_date  <=  '{$s_date_max}'";
+        }
+        //min age filter
+        if (!empty($_POST['min_age'])) {
+            $min_age = $_POST['min_age'];
+            $where .= " and minimum_elegible_age  >=  '{$min_age}'";
+        }
+        //max age filter
+        if (!empty($_POST['max_age'])) {
+            $max_age = $_POST['max_age'];
+            $where .= " and maximum_elegible_age  <=  '{$max_age}'";
+        }
+        //stipend filter
+        if (!empty($_POST['stipend'])) {
+            $stipend = $_POST['stipend'];
+            $where .= " and stipend =  '{$stipend}'";
+        } else {
+            if (!empty($_POST['stipend_min']) && !empty($_POST['stipend_max'])){
+                $stipend_min = $_POST['stipend_min'];
+                $stipend_max = $_POST['stipend_max'];
+                $where .= " and stipend >= '{$stipend_min}' and stipend <= '{$stipend_max}'";
+            } else if (!empty($_POST['stipend_min']) && empty($_POST['stipend_max'])){
+                $stipend_min = $_POST['stipend_min'];
+                $where .= " and stipend >= '{$stipend_min}' ";
+            }else if (empty($_POST['stipend_min']) && !empty($_POST['stipend_max'])){
 
+                $stipend_max = $_POST['stipend_max'];
+                $where .= " and stipend <= '{$stipend_max}'";
+            }
+        }
+
+
+       // print_r($sql . $where)
+        ?>
+
+        <form method="post" action='../pages/courses_page.php'
+              style="margin-bottom: 15px;">
+            <div class="row">
+                <div class="col">
+                    <input type="text" id="title" class="form-control" name="title"
+                           placeholder="Title" value="<?php echo !empty($_POST['title']) ? $_POST['title'] : "" ?>"/>
+                </div>
+                <!--range start date-->
+                <div class="col">
+                    <!--ranged start date-->
+                    <div class="col"
+                         id="s_date_range" <?php echo !empty($_POST['s_date']) ? 'style="display: none;"' : 'style="display: block;"' ?> >
+                        <input type="date" id="s_date_range_min_input" class="form-control" name="s_date_min"
+                               value="<?php echo !empty($_POST['s_date_min']) ? $_POST['s_date_min'] : "" ?>"/>
+                        <label for="s_date_range">Minimum start date</label>
+                        <input type="date" id="s_date_range_max_input" class="form-control" name="s_date_max"
+                               value="<?php echo !empty($_POST['s_date_max']) ? $_POST['s_date_max'] : "" ?>"/>
+                        <label for="s_date_range_max">Maximum start date</label>
+                    </div>
+                    <!-- no ranged start date-->
+                    <div class="col"
+                         id="s_date_no_range" <?php echo empty($_POST['s_date']) ? 'style="display: none;"' : 'style="display: block;"' ?>>
+                        <input type="date" id="s_date_no_range_input" class="form-control" name="s_date"
+                               style="display: block;"
+                               value="<?php echo !empty($_POST['s_date']) ? $_POST['s_date'] : "" ?>"/>
+                        <label for="s_date_no_range">Start date</label>
+                    </div>
+
+                    <input type="checkbox" id="is_start_range" name="ranged_s_date" onclick="StartDateRangeToggle()"
+                        <?php echo empty($_POST['s_date']) ? 'checked' : '' ?>>
+                    <label for="is_start_range">Start date range</label>
+                </div>
+                <!--range end date-->
+                <div class="col">
+                    <!--ranged end date-->
+                    <div class="col"
+                         id="e_date_range" <?php echo !empty($_POST['e_date']) ? 'style="display: none;"' : 'style="display: block;"' ?>>
+                        <input type="date" id="e_date_range_min_input" class="form-control" name="e_date_min"
+                               value="<?php echo !empty($_POST['e_date_min']) ? $_POST['e_date_min'] : "" ?>"/>
+
+                        <label for="e_date_range">Minimum end date</label>
+                        <input type="date" id="e_date_range_max_input" class="form-control" name="e_date_max"
+                               value="<?php echo !empty($_POST['e_date_max']) ? $_POST['e_date_max'] : "" ?>"/>
+                        <label for="e_date_range_max">Maximum end date</label>
+                    </div>
+                    <!--no ranged end date-->
+                    <div class="col"
+                         id="e_date_no_range" <?php echo empty($_POST['e_date']) ? 'style="display: none;"' : 'style="display: block;"' ?>>
+                        <input type="date" id="e_date_no_range_input" class="form-control" name="e_date"
+                               style="display: block;"
+                               value="<?php echo !empty($_POST['e_date']) ? $_POST['e_date'] : "" ?>"/>
+                        <label for="e_date_no_range">End date</label>
+                    </div>
+
+
+                    <input type="checkbox" id="is_end_range" name="ranged_e_date" onclick="EndDateRangeToggle()"
+                        <?php echo empty($_POST['e_date']) ? 'checked' : '' ?>>
+                    <label for="is_end_range">End date range</label>
+
+                </div>
+                <!--min age-->
+                <div class="col">
+
+                    <input type="number" id="min_age" class="form-control" placeholder="Minimum age"
+                           name="min_age" value="<?php echo !empty($_POST['min_age']) ? $_POST['min_age'] : "" ?>"/>
+                </div>
+                <!--max age-->
+                <div class="col">
+                    <input type="number" id="max_age" class="form-control" placeholder="Maximum age"
+                           name="max_age" value="<?php echo !empty($_POST['max_age']) ? $_POST['max_age'] : "" ?>"/>
+                </div>
+                <!--ranged stipend-->
+                <div class="col">
+                    <div class="col"
+                         id="stipend_range" <?php echo !empty($_POST['stipend']) ? 'style="display: none;"' : 'style="display: block;"' ?> >
+                        <input type="number" id="stipend_range_min_input" class="form-control" name="stipend_min"
+                               value="<?php echo !empty($_POST['stipend_min']) ? $_POST['stipend_min'] : "" ?>"
+                               placeholder="Minimum stipend"/>
+
+                        <input type="number" id="stipend_range_max_input" class="form-control" name="stipend_max"
+                               value="<?php echo !empty($_POST['stipend_max']) ? $_POST['stipend_max'] : "" ?>"
+                               placeholder="Maximum stipend"/>
+
+                    </div>
+                    <!-- no ranged stipend-->
+                    <div class="col"
+                         id="stipend_no_range" <?php echo empty($_POST['stipend']) ? 'style="display: none;"' : 'style="display: block;"' ?>>
+
+                        <input type="number" id="stipend_input" class="form-control" placeholder="Stipend"
+                               name="stipend" value="<?php echo !empty($_POST['stipend']) ? $_POST['stipend'] : "" ?>"/>
+                    </div>
+
+
+                    <input type="checkbox" id="is_stipend_range" name="ranged_stipend" onclick="StipendRangeToggle()"
+                        <?php echo empty($_POST['stipend']) ? 'checked' : '' ?>>
+                    <label for="is_stipend_range">Stipend range</label>
+
+                </div>
+                <div class="col">
+                    <button class="btn btn-info " style="cursor: pointer;" id="search_btn">
+                        Search
+                    </button>
+                    <button class="btn btn-dark " style="cursor: pointer;margin-top: 10px;" id="update_btn" onclick="Clearfilter()">
+                        Clear filter
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <div class="container" style="margin-left: 1px;">
+            <form method="post" action='../pages/upt_add_courses_page.php'
+                  onsubmit="return submitFormAdd(this);" style="margin-bottom: 15px;">
+                <input type="hidden" style="cursor: pointer; " name="action"
+                       value="add"/>
+                <input type="hidden" id="upt_pk_studies" style="cursor: pointer;"
+                       name="pk_studies"/>
+                <button class="btn btn-success " style="cursor: pointer;" id="update_btn">
+                    Add a new study
+                </button>
+            </form>
             <table class="table table-dark table-striped table-hover">
                 <thead>
                 <tr style="font-size: x-small;text-align: center;">
@@ -151,14 +318,17 @@ include "../backend/db_connection.php";
                     <th scope="col">Schedule Type</th>
                     <th scope="col">Study length</th>
                     <th scope="col">Delete</th>
-                 <!--<th scope="col">Edit</th> -->
+                    <!---->
+                    <th scope="col">Edit</th>
                 </tr>
                 </thead>
                 <tbody>
 
                 <?php
-                $sql = "SELECT * FROM `studies` ";
-                $resultSet = mysqli_query($connection, $sql);
+                // print_r($_POST);die;
+
+
+                $resultSet = mysqli_query($connection, $sql . $where);
 
                 while ($row = mysqli_fetch_row($resultSet)) { ?>
                     <tr style="font-size: x-small;text-align: center;">
@@ -184,28 +354,29 @@ include "../backend/db_connection.php";
                             <form method="post" action='../backend/add_del_upt_study.php'
                                   onsubmit="return submitFormDelete(this);">
                                 <input type="hidden" style="cursor: pointer;" name="action"
-                                       value="del" />
+                                       value="del"/>
                                 <input type="hidden" id="delete_pk_studies" style="cursor: pointer;"
                                        name="pk_studies"
-                                       value="<?php echo $row[18]; ?>" />
-                                <button class="btn btn-danger " style="cursor: pointer;" id="delete_btn" >
+                                       value="<?php echo $row[18]; ?>"/>
+                                <button class="btn btn-danger " style="cursor: pointer;" id="delete_btn">
                                     Delete
                                 </button>
                             </form>
                         </td>
-                       <!-- <td>
-                            <form method="post" action='../backend/add_del_upt_study.php'
+                        <!-- -->
+                        <td>
+                            <form method="post" action='../pages/upt_add_courses_page.php'
                                   onsubmit="return submitFormUpt(this);">
                                 <input type="hidden" style="cursor: pointer;" name="action"
-                                       value="upt" />
+                                       value="upt"/>
                                 <input type="hidden" id="upt_pk_studies" style="cursor: pointer;"
                                        name="pk_studies"
-                                       value="<?php echo $row[18]; ?>" />
-                                <button class="btn btn-success " style="cursor: pointer;" id="update_btn" >
+                                       value="<?php echo $row[18]; ?>"/>
+                                <button class="btn btn-success " style="cursor: pointer;" id="update_btn">
                                     Update
                                 </button>
                             </form>
-                        </td> -->
+                        </td>
                     </tr>
 
                     <?php
@@ -214,154 +385,7 @@ include "../backend/db_connection.php";
 
                 </tbody>
             </table>
-
-
         </div>
-
-        <hr/>
-        <button class="btn-dark" onclick="ShowHideAddCourse()">Add new study?</button>
-        <div id="add_studies" style="margin-top: 15px;display: none">
-            <form method="post" action='../backend/add_del_upt_study.php'>
-                <input type="hidden" style="cursor: pointer;" name="action"
-                       value="add"/>
-                <div class="row">
-                    <div class="col">
-                        <div class="form-outline">
-                            <input type="number" id="study_number" class="form-control" name="study_num" required
-                                   placeholder="Study number"/>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-outline">
-                            <input type="text" id="title" class="form-control" name="title" required placeholder="Title" />
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-outline">
-                            <input type="date" id="s_date" class="form-control" name="s_date" required/>
-                            <label class="form-label" for="s_date">Study start date</label>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-outline">
-                            <input type="date" id="e_date" class="form-control" name="e_date" required/>
-                            <label class="form-label" for="e_date">Study end date</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-
-                        <div class="form-outline">
-                            <input type="number" id="g_number" class="form-control" placeholder="Group number" required
-                                   name="g_number"/>
-                        </div>
-                    </div>
-                    <div class="col">
-
-                        <div class="form-outline">
-                            <input type="text" id="requirement" class="form-control" placeholder="Requirements" required
-                                   name="requirement"/>
-                        </div>
-                    </div>
-                    <div class="col">
-
-                        <div class="form-outline">
-                            <input type="number" id="stipend" class="form-control" placeholder="Stipend" required
-                                   name="stipend"/>
-                        </div>
-                    </div>
-                    <div class="col">
-
-                        <div class="form-outline">
-                            <input type="number" id="phase" class="form-control" placeholder="Phase" required name="phase"/>
-                        </div>
-                    </div>
-                    <div class="col">
-
-                        <div class="form-outline">
-                            <input type="number" id="min_age" class="form-control"  required placeholder="Minimum age"
-                                   name="min_age"/>
-                        </div>
-                    </div>
-                    <div class="col">
-
-                        <div class="form-outline">
-                            <input type="number" id="max_age" class="form-control"  required placeholder="Maximum age"
-                                   name="max_age"/>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="row">
-                    <div class="col" style="margin-top: 15px;">
-
-                        <div class="form-outline">
-                            <input type="text" id="r_admin" required class="form-control"
-                                   placeholder="Route of administration"
-                                   name="r_admin"/>
-                        </div>
-                    </div>
-                    <div class="col" style="margin-top: 15px;">
-                        <div class="form-outline">
-                            <input type="number" id="b_draws" required class="form-control" placeholder="Blood draws"
-                                   name="b_draws"/>
-                        </div>
-                    </div>
-                    <div class="col" style="margin-top: 15px;">
-                        <div class="form-outline">
-                            <input type="number" id="svrkey" required class="form-control" placeholder="svrkey"
-                                   name="svrkey"/>
-                        </div>
-                    </div>
-                    <div class="col" style="margin-top: 15px;">
-                        <div class="form-outline">
-                            <input type="text" id="location" required class="form-control" placeholder="Location"
-                                   name="location"/>
-                        </div>
-                    </div>
-
-                    <div class="col" style="margin-top: 15px;">
-                        <div class="form-outline">
-                            <input type="text" id="sch_type"  required class="form-control" placeholder="Schedule type"
-                                   name="sch_type"/>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="row">
-                    <div class="col" style="margin-top: 15px;">
-                        <div class="form-outline">
-                            <input type="text" id="indication" required class="form-control" placeholder="Indication"
-                                   name="indication"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col" style="margin-top: 15px;">
-                        <div class="form-outline">
-                            <input type="text" id="s_length" required class="form-control" placeholder="Study length"
-                                   name="s_length"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col" style="margin-top: 15px;">
-                        <div class="form-outline">
-                            <input type="text" id="w_restriction" required class="form-control"
-                                   placeholder="Weight restriction"
-                                   name="w_restriction"/>
-                        </div>
-                    </div>
-                </div>
-                <div style="margin-top: 15px;" class="text-center">
-                    <button class="btn-dark" type="submit">Add a new study</button>
-                </div>
-            </form>
-
-        </div>
-
         </div>
 
 
@@ -458,7 +482,8 @@ include "../backend/db_connection.php";
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>-->
-<!-- sweetalert -->
+<!-- sweetalert-->
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 </html>
