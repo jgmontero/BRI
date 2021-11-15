@@ -10,7 +10,7 @@ include "../backend/db_connection.php";
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Courses Register Page - BRI</title>
+    <title>Studies Register Page - BRI</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -93,7 +93,7 @@ include "../backend/db_connection.php";
                 if ($row[18] == "1") { ?>
                     <li class="dropdown"><a><span>Management</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
-                            <li><a href="./courses_page.php">Courses management</a></li>
+                            <li><a href="./studies_page.php">Studies management</a></li>
                             <li><a href="./user_management">User Management</a></li>
                         </ul>
                     </li>

@@ -402,22 +402,6 @@ function submitFormAdd(form) {
     return false;
 }
 
-function Addstudy(form) {
-    //   console.log(form);
-
-    swal({
-        title: "Do you want to add a new study with this data?",
-        text: "A new study will be added",
-        icon: "info",
-        buttons: true,
-    })
-        .then((isOkay) => {
-            if (isOkay) {
-                form.submit();
-            }
-        });
-    return false;
-}
 
 function StartDateRangeToggle() {
     // div container ranged date
@@ -497,7 +481,7 @@ function StipendRangeToggle() {
 }
 
 function Clearfilter() {
-    document.getElementById("title").value= "";
+    document.getElementById("title").value = "";
     document.getElementById("min_age").value = "";
     document.getElementById("max_age").value = "";
     // start date range inputs
@@ -515,5 +499,105 @@ function Clearfilter() {
     document.getElementById("stipend_range_max_input").value = "";
     // no ranged stipend inputs for reset on display none
     document.getElementById("stipend_input").value = "";
-   // window.location = "../pages/courses_pages.php";
+    // window.location = "../pages/courses_pages.php";
+}
+
+function submitFormAddCustomer(form) {
+    //   console.log(form);
+
+    swal({
+        title: "Do you want to add a new customer?",
+        text: "A new customer will be added",
+        icon: "info",
+        buttons: true,
+    })
+        .then((isOkay) => {
+            if (isOkay) {
+                form.submit();
+            }
+        });
+    return false;
+}
+
+function submitFormAdmin(form) {
+    swal({
+        title: "Make this user admin?",
+        text: "This user will be admin",
+        icon: "info",
+        buttons: true,
+    })
+        .then((isOkay) => {
+            if (isOkay) {
+                //console.log(form);
+                form.submit();
+            }
+        });
+    return false;
+}
+function submitFormAdminDenied(form) {
+    swal({
+        title: "Admin privileges remove requet denied!",
+        text: "This user has root privileges and cannot lose it!",
+        icon: "error",
+        buttons: true,
+    })
+        .then((isOkay) => {
+            if (isOkay) {
+            }
+        });
+    return false;
+}
+
+function UpdatePassToggle() {
+    // div container ranged stipend
+    var passdiv = document.getElementById("upt_pass_div");
+    // pass inputs for reset on display none
+    var password_field = document.getElementById("pass_input");
+    var confirm_pass = document.getElementById("confirm_pass_input");
+
+
+    var checboxemail = document.getElementById("update_email_chkbox");
+    var checboxpass = document.getElementById("update_pass_chkbox");
+    if (checboxpass.checked) {
+        passdiv.style.display = "block";
+        password_field.value = "";
+        confirm_pass.value = "";
+    } else {
+        passdiv.style.display = "none";
+        password_field.value = "";
+        confirm_pass.value = "";
+    }
+}
+
+function UpdateEmailToggle() {
+    swal({
+        title: "Password also should be updated",
+        text: "If you want yo update your email, you also should update your pass",
+        icon: "info",
+        buttons: true,
+    })
+        .then((isOkay) => {
+            if (isOkay) {
+                var emaildiv = document.getElementById("upt_email_div");
+
+                //markin checkbox
+                var checboxpass = document.getElementById("update_pass_chkbox");
+                checboxpass.click();
+               var chkboxpasslabel = document.getElementById("update_pass_chkbox_label");
+                //email chk ativate
+                var checboxemail = document.getElementById("update_email_chkbox");
+
+                if (checboxemail.checked) {
+                    emaildiv.style.display = "block";
+                    checboxpass.style.display = "none";
+                    chkboxpasslabel.style.display = "none";
+                } else {
+                    emaildiv.style.display = "none";
+                    chkboxpasslabel.style.display = "inline";
+                    checboxpass.style.display = "inline";
+
+                }
+            }
+        });
+    return false;
 }

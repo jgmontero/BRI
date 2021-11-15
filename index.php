@@ -70,7 +70,7 @@ include "./backend/db_connection.php";
                         ?>
                         <li class="dropdown"><a href="#"><span>Management</span> <i class="bi bi-chevron-down"></i></a>
                             <ul>
-                                <li><a href="./pages/courses_page.php">Courses management</a></li>
+                                <li><a href="./pages/studies_page.php">Studies management</a></li>
                                 <li><a href="./pages/user_management">User Management</a></li>
                             </ul>
                         </li>

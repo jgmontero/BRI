@@ -11,7 +11,7 @@ include "../backend/db_connection.php";
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Courses Register Page - BRI</title>
+    <title>Studies Register Page - BRI</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -71,7 +71,7 @@ include "../backend/db_connection.php";
                 if ($row[18] == "1") { ?>
                     <li class="dropdown"><a><span>Management</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
-                            <li><a href="./courses_page.php">Courses management</a></li>
+                            <li><a href="./studies_page.php">Studies management</a></li>
                             <li><a href="./user_management">User Management</a></li>
                         </ul>
                     </li>
@@ -176,7 +176,7 @@ include "../backend/db_connection.php";
        // print_r($sql . $where)
         ?>
 
-        <form method="post" action='../pages/courses_page.php'
+        <form method="post" action='../pages/studies_page.php'
               style="margin-bottom: 15px;">
             <div class="row">
                 <div class="col">
@@ -286,7 +286,7 @@ include "../backend/db_connection.php";
         </form>
 
         <div class="container" style="margin-left: 1px;">
-            <form method="post" action='../pages/upt_add_courses_page.php'
+            <form method="post" action='../pages/upt_add_studies_page.php'
                   onsubmit="return submitFormAdd(this);" style="margin-bottom: 15px;">
                 <input type="hidden" style="cursor: pointer; " name="action"
                        value="add"/>
@@ -358,21 +358,21 @@ include "../backend/db_connection.php";
                                 <input type="hidden" id="delete_pk_studies" style="cursor: pointer;"
                                        name="pk_studies"
                                        value="<?php echo $row[18]; ?>"/>
-                                <button class="btn btn-danger " style="cursor: pointer;" id="delete_btn">
+                                <button class="btn btn-danger " style="cursor: pointer;font-size: x-small;text-align: center;" id="delete_btn">
                                     Delete
                                 </button>
                             </form>
                         </td>
                         <!-- -->
                         <td>
-                            <form method="post" action='../pages/upt_add_courses_page.php'
+                            <form method="post" action='../pages/upt_add_studies_page.php'
                                   onsubmit="return submitFormUpt(this);">
                                 <input type="hidden" style="cursor: pointer;" name="action"
                                        value="upt"/>
                                 <input type="hidden" id="upt_pk_studies" style="cursor: pointer;"
                                        name="pk_studies"
                                        value="<?php echo $row[18]; ?>"/>
-                                <button class="btn btn-success " style="cursor: pointer;" id="update_btn">
+                                <button class="btn btn-success " style="cursor: pointer;font-size: x-small;text-align: center;" id="update_btn">
                                     Update
                                 </button>
                             </form>

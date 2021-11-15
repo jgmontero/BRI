@@ -48,17 +48,17 @@ include "../backend/db_connection.php";
   <header id="header" class="fixed-top header-inner-pages">
     <div class="container d-flex align-items-center justify-content-lg-between">
 
-      <h1 class="logo me-auto me-lg-0"><a href="index.html">Gp<span>.</span></a></h1>
+      <h1 class="logo me-auto me-lg-0"><a href="../index.php">BRI<span>.</span></a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto me-lg-0"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
-          <li><a class="nav-link scrollto " href="#hero">Home</a></li>
-          <li><a class="nav-link scrollto" href="#about">About</a></li>
-          <li><a class="nav-link scrollto" href="#services">Services</a></li>
-          <li><a class="nav-link scrollto " href="#studies">Studies</a></li>
-          <li><a class="nav-link scrollto" href="#team">Team</a></li>
+          <li><a class="nav-link scrollto " href="../index.php#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="../index.php#about">About</a></li>
+          <li><a class="nav-link scrollto" href="../index.php#services">Services</a></li>
+          <li><a class="nav-link scrollto " href="../index.php#studies">Studies</a></li>
+          <li><a class="nav-link scrollto" href="../index.php#team">Team</a></li>
             <?php
             $user = $_SESSION["user"];
             $sql = "SELECT * FROM `customers` WHERE email = '{$user}' ";
@@ -67,18 +67,18 @@ include "../backend/db_connection.php";
             if ($row[18] == "1") { ?>
                 <li class="dropdown"><a><span>Management</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
-                        <li><a href="./courses_page.php">Courses management</a></li>
+                        <li><a href="./studies_page.php">Studies management</a></li>
                         <li><a href="./user_management">User Management</a></li>
                     </ul>
                 </li>
             <?php }
             ?>
-          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+          <li><a class="nav-link scrollto" href="../index.php#contact">Contact</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
 
-      <a href="#about" class="get-started-btn scrollto">Get Started</a>
+      <a href="../index.php#about" class="get-started-btn scrollto">Get Started</a>
 
     </div>
   </header><!-- End Header -->
@@ -90,10 +90,10 @@ include "../backend/db_connection.php";
       <div class="container">
 
         <div class="d-flex justify-content-between align-items-center">
-          <h2>Inner Page</h2>
+          <h2>Customers management</h2>
           <ol>
-            <li><a href="index.html">Home</a></li>
-            <li>Inner Page</li>
+            <li><a href="../index.php">Home</a></li>
+            <li>Customers Page</li>
           </ol>
         </div>
 
@@ -101,10 +101,129 @@ include "../backend/db_connection.php";
     </section><!-- End Breadcrumbs -->
 
     <section class="inner-page">
-      <div class="container">
-        <p>
-          Example inner page template
-        </p>
+      <div class="container" style="margin-left: 1px;">
+         <?php
+        $sql = "SELECT * FROM `customers` ";
+        $where = " where 1 "; ?>
+          <form method="post" action='../pages/upt_add_del_customer_page.php'
+                onsubmit="return submitFormAddCustomer(this);" style="margin-bottom: 15px;">
+              <input type="hidden" style="cursor: pointer; " name="action"
+                     value="add"/>
+              <input type="hidden" id="upt_pk_studies" style="cursor: pointer;"
+                     name="pk_customer"/>
+              <button class="btn btn-success " style="cursor: pointer;" id="update_btn">
+                  Add a new customer
+              </button>
+          </form>
+          <table class="table table-dark table-striped table-hover">
+              <thead>
+              <tr style="font-size: x-small;text-align: center;">
+
+                  <th scope="col">email</th>
+                  <th scope="col">Full name</th>
+                  <th scope="col">Birth date</th>
+                  <th scope="col">Female</th>
+                  <th scope="col">Weight</th>
+                  <th scope="col">Height</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">City</th>
+                  <th scope="col">State</th>
+                  <th scope="col">Zip code</th>
+                  <th scope="col">Country</th>
+                  <th scope="col">Phone</th>
+                  <th scope="col">language</th>
+                  <th scope="col">Communication</th>
+                  <th scope="col">Contact time</th>
+                  <th scope="col">is_admin</th>
+                  <th scope="col">root</th>
+                  <th scope="col">Delete</th>
+                  <th scope="col">Edit</th>
+                  <th scope="col">Make admin</th>
+              </tr>
+              </thead>
+              <tbody>
+
+              <?php
+              // print_r($_POST);die;
+
+
+              $resultSet = mysqli_query($connection, $sql . $where);
+
+              while ($row = mysqli_fetch_row($resultSet)) { ?>
+                  <tr style="font-size: x-small;text-align: center;">
+                      <td><?php echo $row[0]; ?></td>
+                      <td><?php echo $row[2]." ".$row[3]; ?></td>
+                      <td><?php echo $row[4]; ?></td>
+                      <td><?php echo $row[5]; ?></td>
+                      <td><?php echo $row[6]; ?></td>
+                      <td><?php echo $row[7]; ?></td>
+                      <td><?php echo $row[8]; ?></td>
+                      <td><?php echo $row[9]; ?></td>
+                      <td><?php echo $row[10]; ?></td>
+                      <td><?php echo $row[11]; ?></td>
+                      <td><?php echo $row[12]; ?></td>
+                      <td><?php echo $row[13]; ?></td>
+                      <td><?php echo $row[14]; ?></td>
+                      <td><?php echo $row[15]; ?></td>
+                      <td><?php echo $row[16]; ?></td>
+                      <td><?php echo $row[18]; ?></td>
+                      <td><?php echo $row[19]; ?></td>
+                      <td>
+                          <form method="post" action="../backend/customer_register.php"
+                                onsubmit="return submitFormDelete(this);">
+                              <input type="hidden" style="cursor: pointer;" name="action"
+                                     value="del"/>
+                              <input type="hidden" id="delete_pk_customer" style="cursor: pointer;"
+                                     name="pk_customer"
+                                     value="<?php echo $row[17]; ?>"/>
+                              <button class="btn btn-danger " style="cursor: pointer;font-size: x-small;text-align: center;" id="delete_customer_btn">
+                                  Delete
+                              </button>
+                          </form>
+                      </td>
+                      <!-- -->
+                      <td>
+                          <form method="post" action="../pages/upt_add_del_customer_page.php"
+                                onsubmit="return submitFormUpt(this);">
+                              <input type="hidden" style="cursor: pointer;" name="action"
+                                     value="upt"/>
+                              <input type="hidden" id="upt_pk_customer" style="cursor: pointer;"
+                                     name="pk_customer"
+                                     value="<?php echo $row[17]; ?>"/>
+                              <input type="hidden" id="is_admin" style="cursor: pointer;"
+                                     name="is_admin"
+                                     value="<?php echo $row[18]; ?>"/>
+                              <button class="btn btn-success " style="cursor: pointer;font-size: x-small;text-align: center;" id="update_customer_btn">
+                                  Update
+                              </button>
+                          </form>
+                      </td>
+                      <td>
+                          <form method="post" action="../backend/customer_register.php"
+                                       onsubmit="<?php echo $row[18]==1 && $row[19]==1 ? "return submitFormAdminDenied(this);" : "return submitFormAdmin(this);"?> ">
+                              <input type="hidden" style="cursor: pointer;" name="action"
+                                     value="admin"/>
+                              <input type="hidden" id="admin_pk_customer" style="cursor: pointer;"
+                                     name="pk_customer" value="<?php echo $row[17]; ?>"/>
+                              <input type="hidden" id="is_admin" style="cursor: pointer;"
+                                     name="is_admin"
+                                     value="<?php echo $row[18]; ?>"/>
+                              <input type="hidden" id="admin_stand" style="cursor: pointer;"
+                                     name="admin_stand"
+                                     value="<?php echo $row[19]; ?>"/>
+                              <button class="btn btn-success " style="cursor: pointer;font-size: x-small;text-align: center;" id="admin_customer_btn">
+                                  <?php echo $row[18]==0 ? "Make admin":"Remove Admin" ?>
+                              </button>
+                          </form>
+                      </td>
+                  </tr>
+
+                  <?php
+              }
+              ?>
+
+              </tbody>
+          </table>
       </div>
     </section>
 
@@ -118,7 +237,7 @@ include "../backend/db_connection.php";
 
           <div class="col-lg-3 col-md-6">
             <div class="footer-info">
-              <h3>Gp<span>.</span></h3>
+              <h3>BRI<span>.</span></h3>
               <p>
                 A108 Adam Street <br>
                 NY 535022, USA<br><br>
@@ -172,7 +291,7 @@ include "../backend/db_connection.php";
 
     <div class="container">
       <div class="copyright">
-        &copy; Copyright <strong><span>Gp</span></strong>. All Rights Reserved
+        &copy; Copyright <strong><span>BRI</span></strong>. All Rights Reserved
       </div>
       <div class="credits">
       
@@ -194,7 +313,7 @@ include "../backend/db_connection.php";
 
   <!-- Template Main JS File -->
   <script src="../assets/js/main.js"></script>
-
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </body>
 
 </html>

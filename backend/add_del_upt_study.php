@@ -44,7 +44,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'del') {
         $resultSet = mysqli_query($connection, $sql);
 
     }
-} else if (isset($_POST['action']) && $_POST['action'] == 'upt') {
+}
+if (isset($_POST['action']) && $_POST['action'] == 'upt') {
 
     $pk_studies = $_POST['pk_studies'];
     $study_num = $_POST['study_num'];
@@ -78,7 +79,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'del') {
    // print_r($sql);die;
 }
 
-//print_r($sql);die;
 
 
-header("location: ../pages/courses_page.php");
+
+header("location: ../pages/studies_page.php");
