@@ -101,10 +101,72 @@ include "../backend/db_connection.php";
     </section><!-- End Breadcrumbs -->
 
     <section class="inner-page">
-      <div class="container" style="margin-left: 1px;">
-         <?php
+        <?php
         $sql = "SELECT * FROM `customers` ";
         $where = " where 1 "; ?>
+
+        <form method="post" action='../pages/studies_page.php'
+              style="margin-bottom: 15px;">
+            <div class="row">
+                <!--email filter-->
+                <div class="col">
+                    <input type="text" id="email" class="form-control" name="email"
+                           placeholder="Email" value="<?php echo !empty($_POST['email']) ? $_POST['email'] : "" ?>"/>
+                </div>
+                <!--first name filter-->
+                <div class="col">
+                    <input type="text" id="f_name" class="form-control" name="f_name"
+                           placeholder="First name" value="<?php echo !empty($_POST['f_name']) ? $_POST['f_name'] : "" ?>"/>
+                </div>
+                <!--last name filter-->
+                <div class="col">
+                    <input type="text" id="l_name" class="form-control" name="l_name"
+                           placeholder="Last name" value="<?php echo !empty($_POST['l_name']) ? $_POST['l_name'] : "" ?>"/>
+                </div>
+                <!--City name filter-->
+                <div class="col">
+                    <input type="text" id="city" class="form-control" name="city"
+                           placeholder="City" value="<?php echo !empty($_POST['city']) ? $_POST['city'] : "" ?>"/>
+                </div>
+                <!--State name filter-->
+                <div class="col">
+                    <input type="text" id="state" class="form-control" name="state"
+                           placeholder="State" value="<?php echo !empty($_POST['state']) ? $_POST['state'] : "" ?>"/>
+                </div>
+                <!--Country name filter-->
+                <div class="col">
+                    <input type="text" id="country" class="form-control" name="country"
+                           placeholder="Country" value="<?php echo !empty($_POST['country']) ? $_POST['country'] : "" ?>"/>
+                </div>
+                <!--Bithdate filter-->
+                <div class="col">
+                    <div class="col"
+                         id="b_date_range" <?php echo !empty($_POST['b_date']) ? 'style="display: none;"' : 'style="display: block;"' ?> >
+                        <input type="date" id="b_date_range_min_input" class="form-control" name="b_date_min"
+                               value="<?php echo !empty($_POST['b_date_min']) ? $_POST['b_date_min'] : "" ?>"/>
+                        <label for="b_date_range">Minimum birth date</label>
+                        <input type="date" id="b_date_range_max_input" class="form-control" name="b_date_max"
+                               value="<?php echo !empty($_POST['b_date_max']) ? $_POST['b_date_max'] : "" ?>"/>
+                        <label for="b_date_range_max">Maximum birth date</label>
+                    </div>
+                    <!-- no ranged start date-->
+                    <div class="col"
+                         id="b_date" <?php echo empty($_POST['b_date']) ? 'style="display: none;"' : 'style="display: block;"' ?>>
+                        <input type="date" id="b_date_input" class="form-control" name="b_date"
+                               style="display: block;"
+                               value="<?php echo !empty($_POST['b_date']) ? $_POST['b_date'] : "" ?>"/>
+                        <label for="b_date">Birth date</label>
+                    </div>
+
+                    <input type="checkbox" id="is_b_date_range" name="ranged_b_date" onclick="BDateRangeToggle()"
+                        <?php echo empty($_POST['b_date']) ? 'checked' : '' ?>>
+                    <label for="is_b_date_range">Birth date range</label>
+                </div>
+            </div>
+        </form>
+
+      <div class="container" style="margin-left: 1px;">
+
           <form method="post" action='../pages/upt_add_del_customer_page.php'
                 onsubmit="return submitFormAddCustomer(this);" style="margin-bottom: 15px;">
               <input type="hidden" style="cursor: pointer; " name="action"

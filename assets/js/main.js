@@ -402,7 +402,32 @@ function submitFormAdd(form) {
     return false;
 }
 
+function BDateRangeToggle(){
+    // div container ranged date
+    var b_date_range = document.getElementById("b_date_range");
+    // ranged date inputs for reset on display none
+    var b_date_range_min_input = document.getElementById("b_date_range_min_input");
+    var b_date_range_max_input = document.getElementById("b_date_range_max_input");
 
+    // div container no ranged date
+    var b_date = document.getElementById("b_date");
+    // no ranged date inputs for reset on display none
+    var b_date_input = document.getElementById("b_date_input");
+
+    var checboxrange = document.getElementById("is_b_date_range");
+
+    if (checboxrange.checked) {
+        b_date_range.style.display = "block";
+        b_date.style.display = "none";
+        b_date_input.value = "";
+
+    } else {
+        b_date_range.style.display = "none";
+        b_date_range_min_input.value = "";
+        b_date_range_max_input.value = "";
+        b_date.style.display = "block";
+    }
+}
 function StartDateRangeToggle() {
     // div container ranged date
     var s_date_range = document.getElementById("s_date_range");
@@ -536,7 +561,7 @@ function submitFormAdmin(form) {
 }
 function submitFormAdminDenied(form) {
     swal({
-        title: "Admin privileges remove requet denied!",
+        title: "Admin privileges remove request denied!",
         text: "This user has root privileges and cannot lose it!",
         icon: "error",
         buttons: true,
