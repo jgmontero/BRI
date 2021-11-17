@@ -102,10 +102,53 @@ include "../backend/db_connection.php";
 
     <section class="inner-page">
         <?php
-        $sql = "SELECT * FROM `customers` ";
-        $where = " where 1 "; ?>
+        print_r($_POST);
 
-        <form method="post" action='../pages/studies_page.php'
+        $sql = "SELECT * FROM `customers` ";
+        $where = " where 1 ";
+
+        if (!empty($_POST['email'])) {
+            $email = $_POST['email'];
+            $where .= " and lower(email) LIKE lower('%{$email}%') ";
+        }
+        if (!empty($_POST['f_name'])) {
+            $f_name = $_POST['f_name'];
+            $where .= " and lower(first_name) LIKE lower('%{$f_name}%') ";
+        }
+        if (!empty($_POST['l_name'])) {
+            $l_name = $_POST['l_name'];
+            $where .= " and lower(last_name) LIKE lower('%{$l_name}%') ";
+        }
+        if (!empty($_POST['city'])) {
+            $city = $_POST['city'];
+            $where .= " and lower(city) LIKE lower('%{$city}%') ";
+        }
+        if (!empty($_POST['state'])) {
+            $state = $_POST['state'];
+            $where .= " and lower(state) LIKE lower('%{$state}%') ";
+        }
+        if (!empty($_POST['country'])) {
+            $country = $_POST['country'];
+            $where .= " and lower(country) LIKE lower('%{$country}%') ";
+        }
+        if (!empty($_POST['b_date']) && empty($_POST['b_date_min']) && empty($_POST['b_date_max'])) {
+            $b_date = $_POST['b_date'];
+            $where .= " and date_of_birth >=  '{$b_date}'";
+        } else if (empty($_POST['b_date']) && !empty($_POST['b_date_min']) && !empty($_POST['b_date_max'])) {
+            $b_date_min = $_POST['b_date_min'];
+            $b_date_max = $_POST['b_date_max'];
+            $where .= " and date_of_birth BETWEEN  '{$b_date_min}' AND  '{$b_date_max}'";
+        } else if (empty($_POST['b_date']) && !empty($_POST['b_date_min']) && empty($_POST['b_date_max'])) {
+            $b_date_min = $_POST['b_date_min'];
+            $where .= " and date_of_birth >=  '{$b_date_min}'";
+        } else if (empty($_POST['b_date']) && empty($_POST['b_date_min']) && !empty($_POST['b_date_max'])) {
+            $b_date_max = $_POST['b_date_max'];
+            $where .= " and date_of_birth  <=  '{$b_date_max}'";
+        }
+
+        print_r($sql);
+        ?>
+        <form method="post" action='../pages/user_management.php'
               style="margin-bottom: 15px;">
             <div class="row">
                 <!--email filter-->
@@ -161,6 +204,16 @@ include "../backend/db_connection.php";
                     <input type="checkbox" id="is_b_date_range" name="ranged_b_date" onclick="BDateRangeToggle()"
                         <?php echo empty($_POST['b_date']) ? 'checked' : '' ?>>
                     <label for="is_b_date_range">Birth date range</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-info " style="cursor: pointer;" id="search_btn">
+                        Search
+                    </button>
+                    <button class="btn btn-dark " style="cursor: pointer;" id="update_btn_user" onclick="ClearfilterUser()">
+                        Clear filter
+                    </button>
                 </div>
             </div>
         </form>

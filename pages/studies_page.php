@@ -274,11 +274,16 @@ include "../backend/db_connection.php";
                     <label for="is_stipend_range">Stipend range</label>
 
                 </div>
+
+
+            </div>
+
+            <div class="row">
                 <div class="col">
                     <button class="btn btn-info " style="cursor: pointer;" id="search_btn">
                         Search
                     </button>
-                    <button class="btn btn-dark " style="cursor: pointer;margin-top: 10px;" id="update_btn" onclick="Clearfilter()">
+                    <button class="btn btn-dark " style="cursor: pointer;" id="update_btn" onclick="Clearfilter()">
                         Clear filter
                     </button>
                 </div>
