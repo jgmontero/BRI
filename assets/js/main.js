@@ -402,7 +402,7 @@ function submitFormAdd(form) {
     return false;
 }
 
-function BDateRangeToggle(){
+function BDateRangeToggle() {
     // div container ranged date
     var b_date_range = document.getElementById("b_date_range");
     // ranged date inputs for reset on display none
@@ -428,6 +428,7 @@ function BDateRangeToggle(){
         b_date.style.display = "block";
     }
 }
+
 function StartDateRangeToggle() {
     // div container ranged date
     var s_date_range = document.getElementById("s_date_range");
@@ -527,6 +528,21 @@ function Clearfilter() {
     // window.location = "../pages/courses_pages.php";
 }
 
+function ClearfilterUser() {
+    document.getElementById("email").value = "";
+    document.getElementById("f_name").value = "";
+    document.getElementById("l_name").value = "";
+    document.getElementById("city").value = "";
+    document.getElementById("state").value = "";
+    document.getElementById("country").value = "";
+    // ranged end birth inputs for reset on display none
+    document.getElementById("b_date_range_min_input").value = "";
+    document.getElementById("b_date_range_max_input").value = "";
+    document.getElementById("b_date_input").value = "";
+
+}
+
+
 function submitFormAddCustomer(form) {
     //   console.log(form);
 
@@ -559,6 +575,7 @@ function submitFormAdmin(form) {
         });
     return false;
 }
+
 function submitFormAdminDenied(form) {
     swal({
         title: "Admin privileges remove request denied!",
@@ -608,7 +625,7 @@ function UpdateEmailToggle() {
                 //markin checkbox
                 var checboxpass = document.getElementById("update_pass_chkbox");
                 checboxpass.click();
-               var chkboxpasslabel = document.getElementById("update_pass_chkbox_label");
+                var chkboxpasslabel = document.getElementById("update_pass_chkbox_label");
                 //email chk ativate
                 var checboxemail = document.getElementById("update_email_chkbox");
 

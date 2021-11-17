@@ -116,59 +116,59 @@ include "../backend/db_connection.php";
         //start date filter
         if (!empty($_POST['s_date']) && empty($_POST['s_date_min']) && empty($_POST['s_date_max'])) {
             $s_date = $_POST['s_date'];
-            $where .= " and start_date >=  '{$s_date}'";
+            $where .= " and start_date >=  '{$s_date}' ";
         } else if (empty($_POST['s_date']) && !empty($_POST['s_date_min']) && !empty($_POST['s_date_max'])) {
             $s_date_min = $_POST['s_date_min'];
             $s_date_max = $_POST['s_date_max'];
-            $where .= " and start_date BETWEEN  '{$s_date_min}' AND   '{$s_date_max}'";
+            $where .= " and start_date BETWEEN  '{$s_date_min}' AND   '{$s_date_max}' ";
         } else if (empty($_POST['s_date']) && !empty($_POST['s_date_min']) && empty($_POST['s_date_max'])) {
             $s_date_min = $_POST['s_date_min'];
-            $where .= " and start_date >=  '{$s_date_min}'";
+            $where .= " and start_date >=  '{$s_date_min}' ";
         } else if (empty($_POST['s_date']) && empty($_POST['s_date_min']) && !empty($_POST['s_date_max'])) {
             $s_date_max = $_POST['s_date_max'];
-            $where .= " and start_date  <=  '{$s_date_max}'";
+            $where .= " and start_date  <=  '{$s_date_max}' ";
         }
         //end date filter (to do: check it)
         if (!empty($_POST['e_date']) && empty($_POST['e_date_min']) && empty($_POST['e_date_max'])) {
             $s_date = $_POST['e_date'];
-            $where .= " and end_date <=  '{$s_date}'";
+            $where .= " and end_date <=  '{$s_date}' ";
         } else if (empty($_POST['e_date']) && !empty($_POST['e_date_min']) && !empty($_POST['e_date_max'])) {
             $s_date_min = $_POST['e_date_min'];
             $s_date_max = $_POST['e_date_max'];
-            $where .= " and end_date BETWEEN  '{$s_date_min}' AND   '{$s_date_max}'";
+            $where .= " and end_date BETWEEN  '{$s_date_min}' AND   '{$s_date_max}' ";
         } else if (empty($_POST['e_date']) && !empty($_POST['e_date_min']) && empty($_POST['e_date_max'])) {
             $s_date_min = $_POST['e_date_min'];
-            $where .= " and end_date >=  '{$s_date_min}'";
+            $where .= " and end_date >=  '{$s_date_min}' ";
         } else if (empty($_POST['e_date']) && empty($_POST['e_date_min']) && !empty($_POST['e_date_max'])) {
             $s_date_max = $_POST['e_date_max'];
-            $where .= " and end_date  <=  '{$s_date_max}'";
+            $where .= " and end_date  <=  '{$s_date_max}' ";
         }
         //min age filter
         if (!empty($_POST['min_age'])) {
             $min_age = $_POST['min_age'];
-            $where .= " and minimum_elegible_age  >=  '{$min_age}'";
+            $where .= " and minimum_elegible_age  >=  '{$min_age}' ";
         }
         //max age filter
         if (!empty($_POST['max_age'])) {
             $max_age = $_POST['max_age'];
-            $where .= " and maximum_elegible_age  <=  '{$max_age}'";
+            $where .= " and maximum_elegible_age  <=  '{$max_age}' ";
         }
         //stipend filter
         if (!empty($_POST['stipend'])) {
             $stipend = $_POST['stipend'];
-            $where .= " and stipend =  '{$stipend}'";
+            $where .= " and stipend =  '{$stipend}' " ;
         } else {
             if (!empty($_POST['stipend_min']) && !empty($_POST['stipend_max'])){
                 $stipend_min = $_POST['stipend_min'];
                 $stipend_max = $_POST['stipend_max'];
-                $where .= " and stipend >= '{$stipend_min}' and stipend <= '{$stipend_max}'";
+                $where .= " and stipend >= '{$stipend_min}' and stipend <= '{$stipend_max}' ";
             } else if (!empty($_POST['stipend_min']) && empty($_POST['stipend_max'])){
                 $stipend_min = $_POST['stipend_min'];
                 $where .= " and stipend >= '{$stipend_min}' ";
             }else if (empty($_POST['stipend_min']) && !empty($_POST['stipend_max'])){
 
                 $stipend_max = $_POST['stipend_max'];
-                $where .= " and stipend <= '{$stipend_max}'";
+                $where .= " and stipend <= '{$stipend_max}' ";
             }
         }
 

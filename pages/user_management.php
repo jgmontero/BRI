@@ -102,7 +102,7 @@ include "../backend/db_connection.php";
 
     <section class="inner-page">
         <?php
-        print_r($_POST);
+       // print_r($_POST);
 
         $sql = "SELECT * FROM `customers` ";
         $where = " where 1 ";
@@ -133,20 +133,20 @@ include "../backend/db_connection.php";
         }
         if (!empty($_POST['b_date']) && empty($_POST['b_date_min']) && empty($_POST['b_date_max'])) {
             $b_date = $_POST['b_date'];
-            $where .= " and date_of_birth >=  '{$b_date}'";
+            $where .= " and date_of_birth =  '{$b_date}' ";
         } else if (empty($_POST['b_date']) && !empty($_POST['b_date_min']) && !empty($_POST['b_date_max'])) {
             $b_date_min = $_POST['b_date_min'];
             $b_date_max = $_POST['b_date_max'];
-            $where .= " and date_of_birth BETWEEN  '{$b_date_min}' AND  '{$b_date_max}'";
+            $where .= " and date_of_birth BETWEEN  '{$b_date_min}' AND  '{$b_date_max}' ";
         } else if (empty($_POST['b_date']) && !empty($_POST['b_date_min']) && empty($_POST['b_date_max'])) {
             $b_date_min = $_POST['b_date_min'];
-            $where .= " and date_of_birth >=  '{$b_date_min}'";
+            $where .= " and date_of_birth >=  '{$b_date_min}' ";
         } else if (empty($_POST['b_date']) && empty($_POST['b_date_min']) && !empty($_POST['b_date_max'])) {
             $b_date_max = $_POST['b_date_max'];
-            $where .= " and date_of_birth  <=  '{$b_date_max}'";
+            $where .= " and date_of_birth  <=  '{$b_date_max}' ";
         }
 
-        print_r($sql);
+        //print_r($sql);
         ?>
         <form method="post" action='../pages/user_management.php'
               style="margin-bottom: 15px;">
