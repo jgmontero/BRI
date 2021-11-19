@@ -103,7 +103,7 @@ include "../backend/db_connection.php";
 
     <section class="inner-page">
         <?php
-        // print_r($_POST);
+
 
         $sql = "SELECT * FROM `customers` ";
         $where = " where 1 ";
@@ -147,7 +147,6 @@ include "../backend/db_connection.php";
             $where .= " and date_of_birth  <=  '{$b_date_max}' ";
         }
 
-        //print_r($sql);
         ?>
         <form method="post" action='../pages/user_management.php'
               style="margin-bottom: 15px;">
@@ -264,10 +263,19 @@ include "../backend/db_connection.php";
                 <tbody>
 
                 <?php
-                // print_r($_POST);die;
+                //numero del limit y sql limit
+                $limit_num = !empty($_POST['RowPerPage']) ? intval($_POST['RowPerPage']) : 5;
+                $limit = " limit " . $limit_num;
+                //nummero de filas
+                $count = mysqli_query($connection, $sql . $where)->num_rows;
+                $offset_num = isset($_POST['offset']) ? $_POST['offset'] : 0;
 
-
-                $resultSet = mysqli_query($connection, $sql . $where);
+                $offset = " offset " . $offset_num;
+                //total de paginas y pagina actual
+                $pages_num = $count / $limit_num;
+                $pagesT = ((($pages_num + 0.5) >= ($pages_num + 1)) ? ceil($pages_num) : floor($pages_num));
+                ($count%2)==0 ? $pagesT-=1 : '';
+                $resultSet = mysqli_query($connection, $sql . $where . $limit . $offset);
 
                 while ($row = mysqli_fetch_row($resultSet)) { ?>
                     <tr style="font-size: x-small;text-align: center;">
@@ -350,34 +358,100 @@ include "../backend/db_connection.php";
 
                 </tbody>
             </table>
-        </div>
 
-        <div class="row">
-            <div class="col">
-                <a href="#">
+        </div>
+        <!--------------------------Pagination----------------------------------->
+        <div class="row" style="justify-content: center;">
+            <!--First page button-->
+            <form method="post" action="#" style="width: 30px;cursor: pointer;
+            <?php echo $offset_num == 0 ? "display: none;" : "display: block"; ?>
+                    ">
+                <input type="hidden" id="r_p_pages" name="offset"
+                       placeholder="" style="width: 4rem;"
+                       value=<?php echo 0 ?>>
+                <input type="hidden" id="r_p_pages" name="RowPerPage"
+                       placeholder="" style="width: 4rem;"
+                       value="<?php echo !empty($_POST['RowPerPage']) ? intval($_POST['RowPerPage']) : 5 ?>"/>
+                <a onclick="this.parentNode.submit();" style="width: 70px;cursor: pointer;">
+                    <input type="hidden" id="first_page_action" name="action"
+                           style="width: 4rem;" value="first">
                     <img src="../assets/img/first_page.png" alt="" width="20" height="20">
                 </a>
-            </div>
-            <div class="col">
-                <a href="#">
+            </form>
+
+
+            <!--Back page button-->
+            <form method="post" action="#" style="width: 30px;cursor: pointer;
+<?php echo $offset_num == 0 ? "display: none;" : "display: block"; ?>">
+                <a onclick="this.parentNode.submit();" style="width: 70px;cursor: pointer;">
+                    <input type="hidden" id="r_p_pages" name="offset"
+                           placeholder="" style="width: 4rem;"
+                           value=<?php echo isset($_POST['offset']) ? intval($_POST['offset']) - $limit_num : '' ?>>
+                    <input type="hidden" id="r_p_pages" name="RowPerPage"
+                           placeholder="" style="width: 4rem;"
+                           value="<?php echo !empty($_POST['RowPerPage']) ? intval($_POST['RowPerPage']) : 5 ?>"/>
+
+                    <input type="hidden" id="back_page_action" name="action"
+                           style="width: 4rem;" value="back">
                     <img src="../assets/img/back.png" alt="" width="20" height="20">
                 </a>
-            </div>
+            </form>
 
-            <div class="col">
-                <input type="text" id="r_p_pages" class="form-control" name="RowPerPage"
-                       placeholder="Rows per page" value=""/>
-            </div>
-            <div class="col">
-                <a href="#">
+            <form method="post" action="#" style="width: 4rem;text-align: center;">
+                <input type="hidden" id="r_p_pages" name="offset"
+                       placeholder="" style="width: 4rem;"
+                       value=<?php echo 0 ?>>
+                <input type="number" id="r_p_pages" name="RowPerPage"
+                       placeholder="" style="width: 4rem;" value="<?php echo $limit_num ?>"/>
+            </form>
+
+
+            <!--Next page button-->
+
+            <form method="post" action="#" style="width: 30px;cursor: pointer;
+<?php echo $offset_num == $pagesT * $limit_num ? "display: none;" : "display: block"; ?>">
+                <input type="hidden" id="r_p_pages" name="offset"
+                       placeholder="" style="width: 4rem;"
+                       value=<?php echo isset($_POST['offset']) ? intval($_POST['offset']) + $limit_num : 0 + $limit_num ?>>
+
+                <input type="hidden" id="r_p_pages" name="RowPerPage"
+                       placeholder="" style="width: 4rem;"
+                       value="<?php echo !empty($_POST['RowPerPage']) ? intval($_POST['RowPerPage']) : 5 ?>"/>
+
+                <a onclick="this.parentNode.submit();" style="width: 70px;cursor: pointer;">
+                    <input type="hidden" id="next_page_action" name="action"
+                           style="width: 4rem;" value="next">
                     <img src="../assets/img/foward.png" alt="" width="20" height="20">
                 </a>
-            </div>
-            <div class="col">
-                <a href="#">
+            </form>
+            <!--Last page button-->
+            <form method="post" action="#" style="width: 30px;cursor: pointer;
+<?php echo $offset_num == $pagesT * $limit_num ? "display: none;" : "display: block"; ?>">
+                <input type="hidden" id="r_p_pages" name="offset"
+                       placeholder=""
+                value=<?php echo $pagesT * $limit_num ?>>
+
+                <input type="hidden" id="r_p_pages" name="RowPerPage"
+                       placeholder="" style="width: 4rem;"
+                       value="<?php echo !empty($_POST['RowPerPage']) ? intval($_POST['RowPerPage']) : 5 ?>"/>
+
+                <a onclick="this.parentNode.submit();" style="width: 70px;cursor: pointer;">
+                    <input type="hidden" id="last_page_action" name="action"
+                           style="width: 4rem;" value="last">
                     <img src="../assets/img/last_page.png" alt="" width="20" height="20">
                 </a>
-            </div>
+            </form>
+
+
+        </div>
+        <div style="text-align: center;">
+            <p><?php ;
+                echo "Showing " . $limit_num . " users starting from user number " . ($offset_num + 1);
+                ?></p>
+            <p><?php ;
+                echo " Total rows " . $count;
+                ?></p>
+
         </div>
     </section>
 
