@@ -355,7 +355,7 @@ include "./backend/db_connection.php";
             </div>
 
             <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-                <div class="studies">
+                <div class="studies col">
                     <?php
 
                     $sql = "SELECT *,(DATEDIFF( `start_date`,now())) as days_to_start , 
@@ -366,7 +366,7 @@ include "./backend/db_connection.php";
                     while ($row = mysqli_fetch_row($resultSet)) {
 
                         ?>
-                        <div>
+                        <div class=" row">
                             <div class="portfolio-item <?php
                             if ($row[19] > 30) {
                                 echo "card bg-light mb-3";
@@ -408,11 +408,18 @@ include "./backend/db_connection.php";
                                     </p>
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                    <?php echo $row[19] > 0 ? ("<li class=\"list-group-item\"> Days left to start: $row[19]</li>")
-                                        : ($row[20] > 0
-                                            ?
-                                            "<li class=\"list-group-item\"> Days left to finish: $row[20]</li>"
-                                            : "<li class=\"list-group-item\"> finished</li>")?>
+                                    <?php
+                                    if($row[19] > 0){
+                                        echo "<li class=\"list-group-item\"> Days left to start: $row[19]</li>";
+                                    }elseif ($row[20] > 0){
+                                        echo "<li class=\"list-group-item\"> Days left to finish: $row[20]</li>";
+                                    }elseif ($row[20] ==0){
+                                        echo "<li class=\"list-group-item\"> finish today</li>";
+                                    }else{
+                                        echo "<li class=\"list-group-item\"> finished</li>";
+                                    }
+
+                                    ?>
 
                                     <li class="list-group-item"> <?php echo $row[2] . '/' . $row[3]; ?></li>
                                     <li class="list-group-item"><?php echo '$' . $row[7]; ?></li>
