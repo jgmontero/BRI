@@ -336,120 +336,169 @@ include "./backend/db_connection.php";
                 <h2>Studies</h2>
                 <p>Check our studies</p>
             </div>
-            <div className="row" data-aos="fade-up" data-aos-delay={100}>
-                <div className="col-lg-12 d-flex justify-content-center">
-                    <ul id="portfolio-flters">
-                        <li data-target="*" data-aos="fade-up" data-aos-delay={100} className="target-active">All</li>
-                        <li data-target="lotsd" data-aos="fade-up" data-aos-delay={100}> More 30 days to start</li>
-                        <li data-target="30d" data-aos="fade-up" data-aos-delay={100}> Between 30 and 20 days to start
-                        </li>
-                        <li data-target="20d" data-aos="fade-up" data-aos-delay={100}>Between 20 days and 10 to start
-                        </li>
-                        <li data-target="10d" data-aos="fade-up" data-aos-delay={100}>Between 10 and 5 days to start
-                        </li>
-                        <li data-target="5d" data-aos="fade-up" data-aos-delay={100}>Less 5 days to start</li>
-                        <li data-target="started" data-aos="fade-up" data-aos-delay={100}>Already started</li>
-                        <li data-target="ended" data-aos="fade-up" data-aos-delay={100}>Ended</li>
-                    </ul>
-                </div>
-            </div>
+            <!--  <div className="row" data-aos="fade-up" data-aos-delay={100}>
+                  <div className="col-lg-12 d-flex justify-content-center">
+                      <ul id="portfolio-flters">
+                          <li data-target="*" data-aos="fade-up" data-aos-delay={100} className="target-active">All</li>
+                          <li data-target="lotsd" data-aos="fade-up" data-aos-delay={100}> More 30 days to start</li>
+                          <li data-target="30d" data-aos="fade-up" data-aos-delay={100}> Between 30 and 20 days to start
+                          </li>
+                          <li data-target="20d" data-aos="fade-up" data-aos-delay={100}>Between 20 days and 10 to start
+                          </li>
+                          <li data-target="10d" data-aos="fade-up" data-aos-delay={100}>Between 10 and 5 days to start
+                          </li>
+                          <li data-target="5d" data-aos="fade-up" data-aos-delay={100}>Less 5 days to start</li>
+                          <li data-target="started" data-aos="fade-up" data-aos-delay={100}>Already started</li                      <!--  <li data-target="ended" data-aos="fade-up" data-aos-delay={100}>Ended</li>
+                      </ul>
+                  </div>
+              </div>-->
 
-            <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
-                <div class="studies col">
-                    <?php
+        </div>
+        <div class="studies-container">
+            <div class="studies">
+                <?php
 
-                    $sql = "SELECT *,(DATEDIFF( `start_date`,now())) as days_to_start , 
+                $sql = "SELECT *,(DATEDIFF( `start_date`,now())) as days_to_start , 
                             (DATEDIFF(`end_date`,now())) as days_to_end 
-                            FROM `studies` WHERE 1 order by days_to_start";
-                    $resultSet = mysqli_query($connection, $sql);
-                    // print_r(mysqli_fetch_all($resultSet));die;
-                    while ($row = mysqli_fetch_row($resultSet)) {
+                            FROM `studies` WHERE (DATEDIFF( `start_date`,now())) >=0 order by days_to_start";
+                $resultSet = mysqli_query($connection, $sql);
+                // print_r(mysqli_fetch_all($resultSet));die;
+                while ($row = mysqli_fetch_row($resultSet)) {
 
-                        ?>
-                        <div class=" row">
-                            <div class="portfolio-item <?php
-                            if ($row[19] > 30) {
-                                echo "card bg-light mb-3";
-                            } else if ($row[19] <= 30 && $row[19] > 20) {
-                                echo "card bg-info mb-3";
-                            } else if ($row[19] <= 20 && $row[19] > 10) {
-                                echo "card bg-primary mb-3";
-                            } else if ($row[19] <= 10 && $row[19] > 5) {
-                                echo "card bg-warning  mb-3";
-                            } else if ($row[19] <= 5 && $row[19] > 0) {
-                                echo "card bg-danger mb-3";
-                            } else if ($row[19] <= 0 && $row[20] >= 0) {
-                                echo "card bg-success mb-3";
-                            } else if ($row[19] <= 0 & $row[20] <= 0) {
-                                echo "card bg-dark mb-3";
-                            }
-                            ?>" style="width: 18rem;" data-id="<?php
-                            if ($row[19] > 30) {
-                                echo "lotsd";
-                            } else if ($row[19] <= 30 && $row[19] > 20) {
-                                echo "30d";
-                            } else if ($row[19] <= 20 && $row[19] > 10) {
-                                echo "20d";
-                            } else if ($row[19] <= 10 && $row[19] > 5) {
-                                echo "10d";
-                            } else if ($row[19] <= 5 && $row[19] > 0) {
-                                echo "5d";
-                            } else if ($row[19] <= 0 && $row[20] >= 0) {
-                                echo "started";
-                            } else if ($row[19] <= 0 & $row[20] <= 0) {
-                                echo "ended";
-                            }
-                            ?>">
-
-                                <div class="card-body">
-                                    <h5 class="card-title"><?php echo $row[1]; ?></h5>
-                                    <p class="card-text">
-                                        <?php echo $row[12]; ?>
-                                    </p>
-                                </div>
-                                <ul class="list-group list-group-flush">
-                                    <?php
-                                    if($row[19] > 0){
-                                        echo "<li class=\"list-group-item\"> Days left to start: $row[19]</li>";
-                                    }elseif ($row[20] > 0){
-                                        echo "<li class=\"list-group-item\"> Days left to finish: $row[20]</li>";
-                                    }elseif ($row[20] ==0){
-                                        echo "<li class=\"list-group-item\"> finish today</li>";
-                                    }else{
-                                        echo "<li class=\"list-group-item\"> finished</li>";
-                                    }
-
-                                    ?>
-
-                                    <li class="list-group-item"> <?php echo $row[2] . '/' . $row[3]; ?></li>
-                                    <li class="list-group-item"><?php echo '$' . $row[7]; ?></li>
-                                    <li class="list-group-item">
-                                        Age: <?php echo "from " . $row[10] . " to " . $row[11] . " years old"; ?></li>
-                                    <li class="list-group-item"> Location: <?php echo $row[15]; ?></li>
-                                </ul>
-                                <div class="card-body">
-
-                                    <form method="post" action=<?php
-                                    echo isset($_SESSION['user'])
-                                        ?
-                                        "./pages/portfolio-details.php"
-                                        : "./pages/login-registrer.php"
-                                    ?>>
-                                        <input type="hidden" style="cursor: pointer;" name="study_pk"
-                                               value="<?php echo $row[18]; ?>"/>
-                                        <a style="cursor: pointer;"
-                                           onclick="this.parentNode.submit();"><?php echo isset($_SESSION['user']) ? 'Details' : 'Login/Register first' ?></a>
-                                    </form>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <?php
-                    }
                     ?>
-                </div>
 
+
+                    <div class="square-flip"   data-id="<?php
+                    if ($row[19] > 30) {
+                        echo "lotsd";
+                    } else if ($row[19] <= 30 && $row[19] > 20) {
+                        echo "30d";
+                    } else if ($row[19] <= 20 && $row[19] > 10) {
+                        echo "20d";
+                    } else if ($row[19] <= 10 && $row[19] > 5) {
+                        echo "10d";
+                    } else if ($row[19] <= 5 && $row[19] > 0) {
+                        echo "5d";
+                    } /*else if ($row[19] <= 0 && $row[20] > 0) {
+                        echo "started";
+                    } else if ($row[19] <= 0 & $row[20] < 0) {
+                        echo "ended";
+                    }*/
+                    ?>">
+                        <div class='square'
+                            <?php
+                            if ($row[19] > 30) {
+                                echo "style='background: linear-gradient(135deg, #77cacad4 0%,#50ffff 49%,#06ebf7 100%);;'";
+                            } else if ($row[19] <= 30 && $row[19] > 20) {
+                                echo "style='background:linear-gradient(135deg, #5b6b8aa1 0%,#383ac8 49%,#0443ffb0 100%);'";
+                            } else if ($row[19] <= 20 && $row[19] > 10) {
+                                echo "style='background: linear-gradient(135deg, #000 0%,#1e2080 49%,#2c00ff 100%);'";
+                            } else if ($row[19] <= 10 && $row[19] > 5) {
+                                echo "style='background: linear-gradient(135deg, #000 0%,#e36d34 49%,#ff7800 100%);'";
+                            } else if ($row[19] <= 5 && $row[19] >= 0) {
+                                echo "style='background: linear-gradient(135deg, #000 0%,#e33434 49%,#ff0005 100%)'";
+                            } /*else if ($row[19] <= 0 && $row[20] > 0) {
+                                echo "style='background: #4c8823;'";
+                            } else if ($row[19] <= 0 & $row[20] < 0) {
+                                echo "style='background: #484848;'";
+                            }*/
+                            ?>>
+                            <div class="square-container ">
+                                <div class="row flexcol">
+                                    <div class="col ">
+                                        <div class="row">
+                                           <h3>
+                                               <?php echo  $row[4] ."-". $row[5]." ".$row[15]; ?>
+                                           </h3>
+                                        </div>
+                                        <div class="row">
+                                            <h3><?php echo $row[2] . '-' . $row[3]; ?></h3>
+                                        </div>
+                                    </div>
+                                    <div class="col ">
+                                        <h3><?php
+                                            if ($row[19] > 0) {
+                                                echo "<h4 class=\"text-center\"> Days to start: $row[19]</h4>";
+                                            }  elseif ($row[19] == 0) {
+                                                echo "<h4 class=\"text-center\"> Starts today</h4>";
+                                            }elseif ($row[20] > 0) {
+                                                echo "<h4 class=\"text-center\"> Days to finish: $row[20]</h4>";
+                                            } elseif ($row[20] == 0) {
+                                                echo "<h4 class=\"text-center\"> Finish today</h4>";
+                                            } else {
+                                                echo "<h4 class=\"text-center\"> Finished</h4>";
+                                            }
+                                            ?>
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="align-center" style="margin-top: 7rem;">
+
+                                    <h2 class="textshadow"><?php echo $row[1]; ?></h2>
+                                    <h3><?php echo $row[12]; ?></h3>
+
+                                    <h5>
+                                        <?php echo '$' . $row[7]; ?>
+                                    </h5>
+                                    <h3>
+                                        <?php echo "From " . $row[10] . " to " . $row[11] . " years old"; ?>
+                                    </h3>
+                                </div>
+
+                            </div>
+                            <div class="flip-overlay"></div>
+                        </div>
+                        <div class='square2 ' style="background: linear-gradient(135deg, #b3afaf 0%,#686868 49%,#444 100%);">
+                            <div class="square-container2">
+                                <div class="align-center">
+                                    <div class="portfolio-info">
+                                        <h3><strong>Requirement</strong>: <?php echo $row[6]; ?></h3>
+                                        <h3><strong>Weight restriction </strong>: <?php echo $row[8]; ?></h3>
+                                        <h3><strong>Route of administration </strong>: <?php echo $row[13]; ?></h3>
+                                        <h3><strong>Blood draws</strong>: <?php echo $row[14]; ?></h3>
+                                        <h3><strong>Location</strong>: <?php echo $row[15]; ?></h3>
+                                        <h3><strong>Schedule </strong>: <?php echo $row[16]; ?></h3>
+                                        <h3><strong>Study length </strong>: <?php echo $row[17]; ?></h3>
+                                    </div>
+                                </div>
+                                <?php
+                                if (isset($_SESSION['user'])) {
+                                    $email = $_SESSION['user'];
+                                    $svrkey = $row[0];}
+                                ?>
+                                <form method="post" action=<?php
+                                echo isset($_SESSION['user'])
+                                    ?
+                                    "./backend/un_subscribe.php"
+                                    : "./pages/login-registrer.php"
+                                ?>>
+                                    <input type="hidden" style="cursor: pointer;" name="study_pk"
+                                           value="<?php echo $row[18]; ?>"/>
+                                    <input type="hidden" style="cursor: pointer;" name="email" value="<?php echo isset($_SESSION['user']) ? $_SESSION['user'] : ""; ?>" />
+                                    <input type="hidden" style="cursor: pointer;" name="svrkey" value="<?php echo $row[0]; ?>" />
+                                    <a style="cursor: pointer;" class="boxshadow kallyas-button"
+                                       onclick="this.parentNode.submit();"><?php
+                                        if (isset($_SESSION['user'])) {
+
+                                            $verify_subscription = mysqli_query($connection, "SELECT * 
+                        from customer_studies 
+                        where email = '$email' and svrkey = '$svrkey'");
+                                            echo (mysqli_num_rows($verify_subscription) > 0) ? 'Unsubscribe' : 'Subscribe' ;
+                                        } else {
+                                            echo 'Log-in/Register';
+                                        }
+
+                                        ?></a>
+                                </form>
+
+                            </div>
+                            <div class="flip-overlay"></div>
+                        </div>
+                    </div>
+
+                    <?php
+                }
+                ?>
             </div>
 
 

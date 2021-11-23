@@ -12,10 +12,10 @@ if (mysqli_num_rows($verify_subscription) == 0) {
     VALUES ('$email',$svrkey) ";
     //print_r($sql);die;
     mysqli_query($connection, $sql);
-    header("location: ../index.php");
+    header("location: ../index.php#studies");
 } else {
     $sql=" DELETE FROM `customer_studies` WHERE email = '$email' and svrkey = '$svrkey' ";
     //print_r($sql);die;
     mysqli_query($connection, $sql);
-    header("location: ../index.php");
+    header("location: ../index.php#studies");
 }

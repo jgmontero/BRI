@@ -204,38 +204,14 @@
      * Porfolio isotope and filter
      */
 
-    window.addEventListener('load', () => {
-        const filter = document.querySelector("#portfolio-flters").children;
-        const items = document.querySelector(".studies").children;
-        for (let i = 0; i < filter.length; i++) {
-            filter[i].addEventListener("click", function () {
-                for (let j = 0; j < filter.length; j++) {
-                    filter[j].classList.remove("active")
-                }
-                this.classList.add("active");
-                const target = this.getAttribute("data-target");
-
-                for (let k = 0; k < items.length; k++) {
-
-                    if (target == items[k].children[0].getAttribute("data-id")) {
-                        items[k].style.display = "flex";
-                    } else if (target == "*") {
-                        items[k].style.display = "flex";
-                    } else {
-                        items[k].style.display = "none";
-                    }
-                }
-            })
-        }
-
-    });
-
 
     window.addEventListener('load', () => {
-        let portfolioContainer = select('.portfolio-container');
 
-        if (portfolioContainer) {
-            let portfolioIsotope = new Isotope(portfolioContainer, {
+        let studiesContainer = select('.studies-container');
+        console.log('studiesContainer');
+
+        if (studiesContainer) {
+            let portfolioIsotope = new Isotope(studiesContainer, {
                 itemSelector: '.portfolio-item'
             });
 
