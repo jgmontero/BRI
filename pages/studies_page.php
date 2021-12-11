@@ -454,7 +454,7 @@ include "../backend/db_connection.php";
             <!--Next page button-->
 
             <form method="post" action="#" style="width: 30px;cursor: pointer;
-<?php echo $offset_num == $pagesT * $limit_num ? "display: none;" : "display: block"; ?>">
+<?php echo $offset_num >= $pagesT * $limit_num ? "display: none;" : "display: block"; ?>">
                 <input type="hidden" id="r_p_pages" name="offset"
                        placeholder="" style="width: 4rem;"
                        value=<?php echo isset($_POST['offset']) ? intval($_POST['offset']) + $limit_num : 0 + $limit_num ?>>
@@ -471,7 +471,7 @@ include "../backend/db_connection.php";
             </form>
             <!--Last page button-->
             <form method="post" action="#" style="width: 30px;cursor: pointer;
-<?php echo $offset_num == $pagesT * $limit_num ? "display: none;" : "display: block"; ?>">
+<?php echo $offset_num >= $pagesT * $limit_num ? "display: none;" : "display: block"; ?>">
                 <input type="hidden" id="r_p_pages" name="offset"
                        placeholder=""
                        value=<?php echo $pagesT * $limit_num ?>>
