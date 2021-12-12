@@ -1,12 +1,8 @@
 <?php
-//use your email
-use PHPMailer\PHPMailer\Exception;
-use PHPMailer\PHPMailer\PHPMailer;
-require './assets/vendor/SMTPmailer/Exception.php';
-require './assets/vendor/SMTPmailer/PHPMailer.php';
-require './assets/vendor/SMTPmailer/SMTP.php';
+require './assets/vendor/PHPMailer/autoload.php';
 
-$mail = new PHPMailer;
+
+$mail = new PHPMailer(true);
 $receiving_email_address = 'jgmontero1995@gmail.com';
 
 
@@ -15,7 +11,7 @@ $mail->Host="smtp.gmail.com";
 $mail->SMTPAuth=TRUE;
 $mail->Username='jgmontero1995@gmail.com';
 $mail->Password='L0N3C0Y0T3gmail';
-$mail->SMTPSecure='tls';
+$mail->SMTPSecure='ssl';
 $mail->Port='507';
 $mail->setFrom('jgmontero1995@gmail.com','Javier Gómez');
 

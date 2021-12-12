@@ -373,6 +373,7 @@ h5{
     background-color: #fff;
     overflow-y: auto;
     transition: 0.3s;
+    height: fit-content;
 }
 
 .navbar-mobile a,
