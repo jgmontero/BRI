@@ -274,7 +274,7 @@ include "../backend/db_connection.php";
                 //total de paginas y pagina actual
                 $pages_num = $count / $limit_num;
                 $pagesT = ((($pages_num + 0.5) >= ($pages_num + 1)) ? ceil($pages_num) : floor($pages_num));
-                ($count%2)==0 ? $pagesT-=1 : '';
+                //($count%2)==0 ? $pagesT-=1 : '';
                 $resultSet = mysqli_query($connection, $sql . $where . $limit . $offset);
 
                 while ($row = mysqli_fetch_row($resultSet)) { ?>

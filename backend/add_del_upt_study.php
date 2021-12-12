@@ -39,8 +39,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'del') {
 
         $pk_studies = $_POST['pk_studies'];
         $sql = "DELETE FROM `studies` WHERE pk_studies= {$pk_studies}";
-        print_r("print de emergencia para evitar deletes /backend/add_del_upt_study.php :42");
-        die;
+        //print_r("print de emergencia para evitar deletes /backend/add_del_upt_study.php :42");die;
         $resultSet = mysqli_query($connection, $sql);
 
     }
@@ -75,8 +74,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'upt') {
 `maximum_elegible_age`={$max_age},`indication`='{$indication}',`route_of_administration`='{$r_admin}',
 `blood_draws`={$b_draws},`location`='{$location}',`schedule_type`='{$sch_type}',`study_length`='{$s_length}'
  WHERE `pk_studies` = {$pk_studies}";
-
-   // print_r($sql);die;
+    $resultSet = mysqli_query($connection, $sql);
+    //print_r($sql);die;
 }
 
 
