@@ -190,6 +190,8 @@ include "./backend/db_connection.php";
     <!-- End About Section -->
 
     <!-- ======= Clients Section ======= -->
+
+    <!--
     <section id="clients" class="clients">
         <div class="container" data-aos="zoom-in">
 
@@ -208,7 +210,7 @@ include "./backend/db_connection.php";
             </div>
 
         </div>
-    </section>
+    </section> -->
     <!-- End Clients Section -->
 
     <!-- ======= Features Section ======= -->
@@ -259,7 +261,7 @@ include "./backend/db_connection.php";
                 <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
                     <div class="icon-box">
                         <div class="icon"><i class="bx bxl-dribbble"></i></div>
-                        <h4><a href="">Lorem Ipsum</a></h4>
+                        <h4><a href="#studies">Lorem Ipsum</a></h4>
                         <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
                     </div>
                 </div>
@@ -268,7 +270,7 @@ include "./backend/db_connection.php";
                      data-aos-delay="200">
                     <div class="icon-box">
                         <div class="icon"><i class="bx bx-file"></i></div>
-                        <h4><a href="">Sed ut perspiciatis</a></h4>
+                        <h4><a href="#studies">Sed ut perspiciatis</a></h4>
                         <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
                     </div>
                 </div>
@@ -277,7 +279,7 @@ include "./backend/db_connection.php";
                      data-aos-delay="300">
                     <div class="icon-box">
                         <div class="icon"><i class="bx bx-tachometer"></i></div>
-                        <h4><a href="">Magni Dolores</a></h4>
+                        <h4><a href="#studies">Magni Dolores</a></h4>
                         <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
                     </div>
                 </div>
@@ -285,7 +287,7 @@ include "./backend/db_connection.php";
                 <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="100">
                     <div class="icon-box">
                         <div class="icon"><i class="bx bx-world"></i></div>
-                        <h4><a href="">Nemo Enim</a></h4>
+                        <h4><a href="#studies">Nemo Enim</a></h4>
                         <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
                     </div>
                 </div>
@@ -293,7 +295,7 @@ include "./backend/db_connection.php";
                 <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="200">
                     <div class="icon-box">
                         <div class="icon"><i class="bx bx-slideshow"></i></div>
-                        <h4><a href="">Dele cardo</a></h4>
+                        <h4><a href="#studies">Dele cardo</a></h4>
                         <p>Quis consequatur saepe eligendi voluptatem consequatur dolor consequuntur</p>
                     </div>
                 </div>
@@ -301,7 +303,7 @@ include "./backend/db_connection.php";
                 <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="300">
                     <div class="icon-box">
                         <div class="icon"><i class="bx bx-arch"></i></div>
-                        <h4><a href="">Divera don</a></h4>
+                        <h4><a href="#studies">Divera don</a></h4>
                         <p>Modi nostrum vel laborum. Porro fugit error sit minus sapiente sit aspernatur</p>
                     </div>
                 </div>
@@ -321,7 +323,7 @@ include "./backend/db_connection.php";
                 <p> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
                     pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
                     anim id est laborum.</p>
-                <a class="cta-btn" href="#">Call To Action</a>
+                <a class="cta-btn" href="#about">Call To Action</a>
             </div>
 
         </div>
@@ -476,6 +478,9 @@ include "./backend/db_connection.php";
                                            value="<?php echo $row[18]; ?>"/>
                                     <input type="hidden" style="cursor: pointer;" name="email" value="<?php echo isset($_SESSION['user']) ? $_SESSION['user'] : ""; ?>" />
                                     <input type="hidden" style="cursor: pointer;" name="svrkey" value="<?php echo $row[0]; ?>" />
+                                    <input type="hidden" style="cursor: pointer;" name="title" value="<?php echo $row[1]; ?>" />
+                                    <input type="hidden" style="cursor: pointer;" name="DtoS" value="<?php echo $row[19]; ?>" />
+                                    <input type="hidden" style="cursor: pointer;" name="Sdate" value="<?php echo $row[2]; ?>" />
                                     <a style="cursor: pointer;" class="boxshadow kallyas-button"
                                        onclick="this.parentNode.submit();"><?php
                                         if (isset($_SESSION['user'])) {
@@ -516,7 +521,7 @@ include "./backend/db_connection.php";
                 <div class="col-xl-7 ps-0 ps-lg-5 pe-lg-1 d-flex align-items-stretch" data-aos="fade-left"
                      data-aos-delay="100">
                     <div class="content d-flex flex-column justify-content-center">
-                        <h3>Voluptatem dignissimos provident quasi</h3>
+                        <h3>Voluptatem dignissimos provident quasi (you may removed or make it work, you decide)</h3>
                         <p>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                             labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
@@ -670,7 +675,7 @@ include "./backend/db_connection.php";
         <div class="container" data-aos="fade-up">
 
             <div class="section-title">
-                <h2>Team</h2>
+                <h2>Team (Replace with your staff)</h2>
                 <p>Check our Team</p>
             </div>
 
@@ -759,13 +764,14 @@ include "./backend/db_connection.php";
         <div class="container" data-aos="fade-up">
 
             <div class="section-title">
-                <h2>Contact</h2>
+                <h2>Contact (in Order to work, a google map embed api key is required https://developers.google.com/maps/documentation/embed/get-api-key)</h2>
                 <p>Contact Us</p>
             </div>
 
             <div>
                 <iframe style="border:0; width: 100%; height: 270px;"
-                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621"
+                        src="https://www.google.com/maps/embed/v1/place?q=Key%20Biscayne?key=YOUR_API_KEY"
+                <!-- working source                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" ======= -->
                         frameborder="0" allowfullscreen></iframe>
             </div>
 
@@ -776,19 +782,19 @@ include "./backend/db_connection.php";
                         <div class="address">
                             <i class="bi bi-geo-alt"></i>
                             <h4>Location:</h4>
-                            <p>A108 Adam Street, New York, NY 535022</p>
+                            <p>compan address</p>
                         </div>
 
                         <div class="email">
                             <i class="bi bi-envelope"></i>
                             <h4>Email:</h4>
-                            <p>jgmontero1995@gmail.com</p>
+                            <p>support staff email</p>
                         </div>
 
                         <div class="phone">
                             <i class="bi bi-phone"></i>
                             <h4>Call:</h4>
-                            <p>+1 5589 55488 55s</p>
+                            <p>your number</p>
                         </div>
 
                     </div>
