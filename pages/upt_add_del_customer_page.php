@@ -119,7 +119,7 @@ include "../backend/db_connection.php";
         ?>
         <div class="container" style="margin-left: 1px;">
             <div id="add_customer" style="margin-top: 15px;">
-                <form action="../backend/customer_register.php" method="post" class="formulario__register">
+                <form action="../backend/customer_register.php" onsubmit="return CheckRegister(this)" method="post" class="formulario__register">
                     <input type="hidden" style="cursor: pointer; " name="action"
                            value="<?php echo !empty($_POST['pk_customer']) ? "upt" : "add" ?>"/>
                     <input type="hidden" style="cursor: pointer; " name="pk_customer"
@@ -128,19 +128,20 @@ include "../backend/db_connection.php";
                     <input type="hidden" style="cursor: pointer; " name="is_admin"
                            value="<?php echo !empty($_POST['pk_customer']) ? $_POST['is_admin'] : "" ?>"/>
 
-                    <input type="checkbox" id="update_email_chkbox" name="update_email_chkbox" onclick="UpdateEmailToggle()">
-                    <label for="update_email_chkbox">New Email?</label>
+                    <input type="checkbox" id="update_email_chkbox" style="<?php echo empty($_POST['pk_customer']) ? 'display:none' :  'display:block'?>"
+                           name="update_email_chkbox" onclick="UpdateEmailToggle()">
+                    <label for="update_email_chkbox" style="<?php echo empty($_POST['pk_customer']) ? 'display:none' :  'display:block'?>">New Email?</label>
 
-                   <div style="display: none;" id="upt_email_div">
+                   <div style="<?php echo empty($_POST['pk_customer']) ? 'display:block' :  'display:none'?>" id="upt_email_div">
                        <input id="email_input" class="form-control" type="text" placeholder="Email" name="email"
                               value="<?php echo !empty($_POST['pk_customer']) ? $row[0] : "" ?>">
                    </div>
 
 
 
-                    <input type="checkbox" id="update_pass_chkbox" name="update_pass_chkbox" onclick="UpdatePassToggle()">
-                    <label for="update_pass_chkbox" id="update_pass_chkbox_label">New Pass?</label>
-                    <div style="display: none;" id="upt_pass_div">
+                    <input type="checkbox" style="<?php echo empty($_POST['pk_customer']) ? 'display:none' :  'display:block'?>" id="update_pass_chkbox" name="update_pass_chkbox" onclick="UpdatePassToggle()">
+                    <label for="update_pass_chkbox" style="<?php echo empty($_POST['pk_customer']) ? 'display:none' :  'display:block'?>" id="update_pass_chkbox_label">New Pass?</label>
+                    <div style="<?php echo empty($_POST['pk_customer']) ? 'display:block' :  'display:none'?>" id="upt_pass_div">
                         <input id="pass_input" class="form-control" type="password" placeholder="Type new password" name="pass">
                         <input id="confirm_pass_input" class="form-control" type="password" placeholder="Confirm new password"
                                name="pass_confirm">
@@ -163,9 +164,9 @@ include "../backend/db_connection.php";
                     <p class="date_of_birth" style="text-align: center;">Date of birth:</p>
                     <input class="form-control" type="date" name="date_of_birth" id="date_of_birth"
                            value="<?php echo !empty($_POST['pk_customer']) ? $row[4] : "" ?>" required>
-                    <input class="form-control" type="number" step=".01" placeholder="Weight (Kgs)" name="weight"
+                    <input class="form-control" type="number" step=".01" placeholder="Weight (Kgs)" name="weightKG"
                            value="<?php echo !empty($_POST['pk_customer']) ? $row[6] : "" ?>" required>
-                    <input class="form-control" type="text" placeholder="Height (feet)" name="height"
+                    <input class="form-control" type="text" placeholder="Height (feet)" name="heightft"
                            value="<?php echo !empty($_POST['pk_customer']) ? $row[7] : "" ?>" required>
                     <input class="form-control" type="text" placeholder="Address" name="address"
                            value="<?php echo !empty($_POST['pk_customer']) ? $row[8] : "" ?>" required>
@@ -177,7 +178,7 @@ include "../backend/db_connection.php";
                            value="<?php echo !empty($_POST['pk_customer']) ? $row[11] : "" ?>" required>
                     <input class="form-control" type="text" placeholder="Country" name="country"
                            value="<?php echo !empty($_POST['pk_customer']) ? $row[12] : "" ?>" required>
-                    <input class="form-control" type="text" placeholder="Phone" name="phone"
+                    <input class="form-control" type="text" placeholder="Phone" name="phoneN"
                            value="<?php echo !empty($_POST['pk_customer']) ? $row[13] : "" ?>" required>
                     <input class="form-control" type="text" placeholder="Language" name="language" r
                            value="<?php echo !empty($_POST['pk_customer']) ? $row[14] : "" ?>" equired>
@@ -278,7 +279,6 @@ include "../backend/db_connection.php";
 <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
 <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-<script src="../assets/vendor/php-email-form/validate.js"></script>
 <script src="../assets/vendor/purecounter/purecounter.js"></script>
 <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
 

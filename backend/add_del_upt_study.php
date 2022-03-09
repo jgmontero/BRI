@@ -2,9 +2,9 @@
 include "../backend/db_connection.php";
 session_start();
 //print_r($_POST);die;
-if (isset($_POST['action']) && $_POST['action'] == 'add') {
+if (isset($_POST['actionF']) && $_POST['actionF'] == 'add') {
 
-   // print_r('add');die;
+   // print_r('$_POST');die;
 
     $study_num = $_POST['study_num'];
     $title = $_POST['title'];
@@ -13,7 +13,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'add') {
     $g_number = $_POST['g_number'];
     $requirement = $_POST['requirement'];
     $stipend = $_POST['stipend'];
-    $phase = $_POST['phase'];
+    $phase = $_POST['phaseS'];
     $min_age = $_POST['min_age'];
     $max_age = $_POST['max_age'];
     $r_admin = $_POST['r_admin'];
@@ -23,7 +23,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'add') {
     $indication = $_POST['indication'];
     $s_length = $_POST['s_length'];
     $w_restriction = $_POST['w_restriction'];
-    $svrkey = $_POST['svrkey'];
+    $svrkey = rand();
+
+    $svrkey_check_query = "select * from studies where svrkey = '$svrkey'";
+    $check_unique_svrkey = mysqli_query($connection, $svrkey_check_query);
+    do{
+        $svrkey = rand();
+        $svrkey_check_query = "select * from studies where svrkey = '$svrkey'";
+        $check_unique_svrkey = mysqli_query($connection, $svrkey_check_query);
+    }while(mysqli_num_rows($check_unique_svrkey) > 0);
 
     $sql = "INSERT INTO `studies`(`svrkey`, `title`, `start_date`, `end_date`, `study_number`, `group_number`, `requirement`,
  `stipend`, `weigth_restriction`, `phase`, `minimum_elegible_age`, `maximum_elegible_age`, `indication`, 
@@ -31,9 +39,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'add') {
  VALUES ({$svrkey},'{$title}','{$s_date}','{$e_date}',{$study_num},{$g_number},'{$requirement}',{$stipend},'{$w_restriction}',
  {$phase},{$min_age},{$max_age},'{$indication}','{$r_admin}',{$b_draws},'{$location}','{$sch_type}','{$s_length}') ";
 
+
     $resultSet = mysqli_query($connection, $sql);
 }
-if (isset($_POST['action']) && $_POST['action'] == 'del') {
+if (isset($_POST['actionF']) && $_POST['actionF'] == 'del') {
     //print_r('entro al del');die;
     {
 
@@ -44,7 +53,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'del') {
 
     }
 }
-if (isset($_POST['action']) && $_POST['action'] == 'upt') {
+if (isset($_POST['actionF']) && $_POST['actionF'] == 'upt') {
 
     $pk_studies = $_POST['pk_studies'];
     $study_num = $_POST['study_num'];
@@ -54,7 +63,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'upt') {
     $g_number = $_POST['g_number'];
     $requirement = $_POST['requirement'];
     $stipend = $_POST['stipend'];
-    $phase = $_POST['phase'];
+    $phase = $_POST['phaseS'];
     $min_age = $_POST['min_age'];
     $max_age = $_POST['max_age'];
     $r_admin = $_POST['r_admin'];
@@ -64,11 +73,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'upt') {
     $indication = $_POST['indication'];
     $s_length = $_POST['s_length'];
     $w_restriction = $_POST['w_restriction'];
-    $svrkey = $_POST['svrkey'];
 
-
-
-    $sql ="UPDATE `studies` SET `svrkey`={$svrkey},`title`='{$title}',`start_date`= '{$s_date}',
+    $sql ="UPDATE `studies` SET `title`='{$title}',`start_date`= '{$s_date}',
 `end_date`='{$e_date}',`study_number`={$study_num},`group_number`={$g_number},`requirement`='{$requirement}',
 `stipend`={$stipend},`weigth_restriction`='{$w_restriction}',`phase`={$phase},`minimum_elegible_age`={$min_age},
 `maximum_elegible_age`={$max_age},`indication`='{$indication}',`route_of_administration`='{$r_admin}',

@@ -140,8 +140,8 @@ include "../backend/db_connection.php";
         ?>
         <div class="container" style="margin-left: 1px;">
             <div id="add_studies" style="margin-top: 15px;">
-                <form method="post" action='../backend/add_del_upt_study.php' onsubmit="<?php echo $_POST['pk_studies'] ? 'return Uptstudy(this);': 'return Addstudy(this);' ?>" >
-                    <input type="hidden" style="cursor: pointer;" name="action"
+                <form method="post" action='../backend/add_del_upt_study.php' onsubmit="return CheckStudy(this)" >
+                    <input type="hidden" style="cursor: pointer;" name="actionF"
                            value="<?php echo $_POST['pk_studies'] ? "upt" : "add"  ?>"/>
                     <div class="row">
                         <div class="col">
@@ -200,7 +200,7 @@ include "../backend/db_connection.php";
                             <div class="form-outline">
                                 <input type="number" id="phase" class="form-control" placeholder="Phase" required
                                        value="<?php echo $_POST['pk_studies'] ? $row[9]: ""  ?>"
-                                       name="phase"/>
+                                       name="phaseS"/>
                             </div>
                         </div>
                         <div class="col">
@@ -235,12 +235,6 @@ include "../backend/db_connection.php";
                                 <input type="number" id="b_draws" required class="form-control"
                                        placeholder="Blood draws" value="<?php echo $_POST['pk_studies'] ? $row[14]: ""  ?>"
                                        name="b_draws"/>
-                            </div>
-                        </div>
-                        <div class="col" style="margin-top: 15px;">
-                            <div class="form-outline">
-                                <input type="number" id="svrkey" required class="form-control" placeholder="svrkey"
-                                       name="svrkey" value="<?php echo $_POST['pk_studies'] ? $row[0]: ""  ?>"/>
                             </div>
                         </div>
                         <div class="col" style="margin-top: 15px;">
@@ -390,7 +384,7 @@ include "../backend/db_connection.php";
 <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
 <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-<script src="../assets/vendor/php-email-form/validate.js"></script>
+
 <script src="../assets/vendor/purecounter/purecounter.js"></script>
 <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
 

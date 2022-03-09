@@ -222,7 +222,7 @@ include "../backend/db_connection.php";
             </div>
         </form>
 
-        <div class="container" style="margin-left: 1px;">
+        <div class="container" style="margin-left: 1px;overflow-x: auto; max-width: 98%">
 
             <form method="post" action='../pages/upt_add_del_customer_page.php'
                   onsubmit="return submitFormAddCustomer(this);" style="margin-bottom: 15px;">
@@ -234,11 +234,11 @@ include "../backend/db_connection.php";
                     Add a new customer
                 </button>
             </form>
-            <table class="table table-dark table-striped table-hover">
+            <table class="table dataTable table-dark table-striped table-hover ">
                 <thead>
                 <tr style="font-size: x-small;text-align: center;">
 
-                    <th scope="col">email</th>
+                    <th scope="col">Email</th>
                     <th scope="col">Full name</th>
                     <th scope="col">Birth date</th>
                     <th scope="col">Female</th>
@@ -536,7 +536,6 @@ include "../backend/db_connection.php";
 <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
 <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-<script src="../assets/vendor/php-email-form/validate.js"></script>
 <script src="../assets/vendor/purecounter/purecounter.js"></script>
 <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
 

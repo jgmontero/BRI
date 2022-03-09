@@ -370,7 +370,7 @@ include "./backend/db_connection.php";
                     ?>
 
 
-                    <div class="square-flip"   data-id="<?php
+                    <div class="square-flip"  onclick="flipCard(this)" data-id="<?php
                     if ($row[19] > 30) {
                         echo "lotsd";
                     } else if ($row[19] <= 30 && $row[19] > 20) {
@@ -387,7 +387,7 @@ include "./backend/db_connection.php";
                         echo "ended";
                     }*/
                     ?>">
-                        <div class='square'
+                        <div  class='square'
                             <?php
                             if ($row[19] > 30) {
                                 echo "style='background: linear-gradient(135deg, #77cacad4 0%,#50ffff 49%,#06ebf7 100%);;'";
@@ -405,7 +405,7 @@ include "./backend/db_connection.php";
                                 echo "style='background: #484848;'";
                             }*/
                             ?>>
-                            <div class="square-container ">
+                            <div class="square-container">
                                 <div class="row flexcol">
                                     <div class="col ">
                                         <div class="row">
@@ -450,7 +450,7 @@ include "./backend/db_connection.php";
                             </div>
                             <div class="flip-overlay"></div>
                         </div>
-                        <div class='square2 ' style="background: linear-gradient(135deg, #b3afaf 0%,#686868 49%,#444 100%);">
+                        <div class='square2' style="background: linear-gradient(135deg, #b3afaf 0%,#686868 49%,#444 100%);">
                             <div class="square-container2">
                                 <div class="align-center">
                                     <div class="portfolio-info">
@@ -761,6 +761,7 @@ include "./backend/db_connection.php";
 
     <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact">
+        <!-- ======= Contact map
         <div class="container" data-aos="fade-up">
 
             <div class="section-title">
@@ -771,9 +772,9 @@ include "./backend/db_connection.php";
             <div>
                 <iframe style="border:0; width: 100%; height: 270px;"
                         src="https://www.google.com/maps/embed/v1/place?q=Key%20Biscayne?key=YOUR_API_KEY"
-                <!-- working source                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" ======= -->
+                working source                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621"
                         frameborder="0" allowfullscreen></iframe>
-            </div>
+            </div> ======= -->
 
             <div class="row mt-5">
 
@@ -926,7 +927,6 @@ include "./backend/db_connection.php";
 <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
 <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-<script src="assets/vendor/php-email-form/validate.js"></script>
 <script src="assets/vendor/purecounter/purecounter.js"></script>
 <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 

@@ -180,7 +180,7 @@ include "../backend/db_connection.php";
               style="margin-bottom: 15px;">
             <div class="row">
                 <div class="col">
-                    <input type="text" id="title" class="form-control" name="title"
+                    <input type="text" id="title" class="form-control" name="title" onsubmit="return CheckStudy(this)"
                            placeholder="Title" value="<?php echo !empty($_POST['title']) ? $_POST['title'] : "" ?>"/>
                 </div>
                 <!--range start date-->
@@ -290,7 +290,7 @@ include "../backend/db_connection.php";
             </div>
         </form>
 
-        <div class="container" style="margin-left: 1px;">
+        <div class="container" style="margin-left: 1px;overflow-x: auto; max-width: 98%">
             <form method="post" action='../pages/upt_add_studies_page.php'
                   onsubmit="return submitFormAdd(this);" style="margin-bottom: 15px;">
                 <input type="hidden" style="cursor: pointer; " name="action"
@@ -301,7 +301,7 @@ include "../backend/db_connection.php";
                     Add a new study
                 </button>
             </form>
-            <table class="table table-dark table-striped table-hover">
+            <table class="table dataTable table-dark table-striped table-hover">
                 <thead>
                 <tr style="font-size: x-small;text-align: center;">
                     <th scope="col">svrkey</th>
@@ -583,7 +583,7 @@ include "../backend/db_connection.php";
 <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
 <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-<script src="../assets/vendor/php-email-form/validate.js"></script>
+
 <script src="../assets/vendor/purecounter/purecounter.js"></script>
 <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
 

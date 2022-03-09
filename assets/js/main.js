@@ -167,38 +167,38 @@
     /**
      * Clients Slider
      */
-    new Swiper('.clients-slider', {
-        speed: 400,
-        loop: true,
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: false
-        },
-        slidesPerView: 'auto',
-        pagination: {
-            el: '.swiper-pagination',
-            type: 'bullets',
-            clickable: true
-        },
-        breakpoints: {
-            320: {
-                slidesPerView: 2,
-                spaceBetween: 40
-            },
-            480: {
-                slidesPerView: 3,
-                spaceBetween: 60
-            },
-            640: {
-                slidesPerView: 4,
-                spaceBetween: 80
-            },
-            992: {
-                slidesPerView: 6,
-                spaceBetween: 120
-            }
-        }
-    });
+    /* new Swiper('.clients-slider', {
+         speed: 400,
+         loop: true,
+         autoplay: {
+             delay: 5000,
+             disableOnInteraction: false
+         },
+         slidesPerView: 'auto',
+         pagination: {
+             el: '.swiper-pagination',
+             type: 'bullets',
+             clickable: true
+         },
+         breakpoints: {
+             320: {
+                 slidesPerView: 2,
+                 spaceBetween: 40
+             },
+             480: {
+                 slidesPerView: 3,
+                 spaceBetween: 60
+             },
+             640: {
+                 slidesPerView: 4,
+                 spaceBetween: 80
+             },
+             992: {
+                 slidesPerView: 6,
+                 spaceBetween: 120
+             }
+         }
+     });*/
 
     /**
      * Porfolio isotope and filter
@@ -208,7 +208,7 @@
     window.addEventListener('load', () => {
 
         let studiesContainer = select('.studies-container');
-        console.log('studiesContainer');
+        //console.log('studiesContainer');
 
         if (studiesContainer) {
             let portfolioIsotope = new Isotope(studiesContainer, {
@@ -246,26 +246,26 @@
     /**
      * Initiate portfolio lightbox
      */
-    const portfolioLightbox = GLightbox({
+    /*const portfolioLightbox = GLightbox({
         selector: '.portfolio-lightbox'
-    });
+    });*/
 
     /**
      * Portfolio details slider
      */
-    new Swiper('.portfolio-details-slider', {
-        speed: 400,
-        loop: true,
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: false
-        },
-        pagination: {
-            el: '.swiper-pagination',
-            type: 'bullets',
-            clickable: true
-        }
-    });
+    /*  new Swiper('.portfolio-details-slider', {
+          speed: 400,
+          loop: true,
+          autoplay: {
+              delay: 5000,
+              disableOnInteraction: false
+          },
+          pagination: {
+              el: '.swiper-pagination',
+              type: 'bullets',
+              clickable: true
+          }
+      });*/
 
     /**
      * Testimonials slider
@@ -590,32 +590,424 @@ function UpdatePassToggle() {
 function UpdateEmailToggle() {
     swal({
         title: "Password also should be updated",
-        text: "If you want yo update your email, you also should update your pass",
+        text: "If you want to update your email, you also should update your pass",
         icon: "info",
-        buttons: true,
+        //buttons: true,
     })
         .then((isOkay) => {
-            if (isOkay) {
-                var emaildiv = document.getElementById("upt_email_div");
 
-                //markin checkbox
-                var checboxpass = document.getElementById("update_pass_chkbox");
-                checboxpass.click();
-                var chkboxpasslabel = document.getElementById("update_pass_chkbox_label");
-                //email chk ativate
-                var checboxemail = document.getElementById("update_email_chkbox");
+            var emaildiv = document.getElementById("upt_email_div");
 
-                if (checboxemail.checked) {
-                    emaildiv.style.display = "block";
-                    checboxpass.style.display = "none";
-                    chkboxpasslabel.style.display = "none";
-                } else {
-                    emaildiv.style.display = "none";
-                    chkboxpasslabel.style.display = "inline";
-                    checboxpass.style.display = "inline";
+            //markin checkbox
+            var checboxpass = document.getElementById("update_pass_chkbox");
+            checboxpass.click();
+            var chkboxpasslabel = document.getElementById("update_pass_chkbox_label");
+            //email chk ativate
+            var checboxemail = document.getElementById("update_email_chkbox");
 
-                }
+            if (checboxemail.checked) {
+                emaildiv.style.display = "block";
+                checboxpass.style.display = "none";
+                chkboxpasslabel.style.display = "none";
+            } else {
+                emaildiv.style.display = "none";
+                chkboxpasslabel.style.display = "inline";
+                checboxpass.style.display = "inline";
+
+
             }
         });
     return false;
 }
+
+/**
+ * @return {boolean}
+ */
+function CheckLogin(form) {
+
+    const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    // var pass = form.pass.value;
+    if (form.email.value == "") {
+        swal({
+            title: "User Empty",
+            text: "The user cannot be empty!!",
+            icon: "error",
+            buttons: true,
+        })
+            .then((isOkay) => {
+                if (isOkay) {
+                    form.email.focus();
+                }
+            });
+        return false;
+    } else if (form.pass.value == "") {
+        swal({
+            title: "Password Empty!!!",
+            text: "The password cannot be empty!!",
+            icon: "error",
+            buttons: true,
+        })
+            .then((isOkay) => {
+                if (isOkay) {
+                    form.pass.focus();
+                }
+            });
+        return false;
+    } else if (!pattern.test(form.email.value.toLowerCase())) {
+        swal({
+            title: "Invalid email format!!",
+            text: "The email should have this format user@emailprovider.domain !!",
+            icon: "error",
+            buttons: true,
+        })
+            .then((isOkay) => {
+                if (isOkay) {
+                    form.email.focus();
+                }
+            });
+        return false;
+    }
+
+   /* var data = new FormData();
+    data.append('email', form.email.value);
+    data.append('pass', form.pass.value);
+    var url = "../backend/credentials_validation.php";
+    var xhr = new XMLHttpRequest();
+    var wrongUserPass = document.getElementById("wrongUserPass");
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            // console.log('xhr.readyState == 4');
+            if (xhr.status === 200) {
+                console.log(JSON.parse(this.response));
+                if (JSON.parse(this.response) === "false") {
+                    wrongUserPass.setAttribute('display','block');
+                    return false;
+                }
+            } else {
+                wrongUserPass.setAttribute('display','none');
+                console.log('error ' + xhr.status);
+            }
+        }
+    };
+
+    xhr.open("POST", url, true);
+    xhr.send(data);*/
+
+}
+
+
+function CheckRegister(form) {
+
+    const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    var today = new Date(mm + '/' + dd + '/' + yyyy);
+    var hft = form.heightft.value;
+    var regex = /^(?!\s*$)(?:(?!0+')\d+')?(?: *(?!0+")\d+")?(?: *(?!0+\/)\d+\/(?!0+$)\d+)?$/;
+    var phoneregex = /^\+((?:9[679]|8[035789]|6[789]|5[90]|42|3[578]|2[1-689])|9[0-58]|8[1246]|6[0-6]|5[1-8]|4[013-9]|3[0-469]|2[70]|7|1)(?:\W*\d){0,13}\d$/;
+    var phoneNumber = form.phoneN.value;
+    var zipCodeRegex = /(^\d{5}$)|(^\d{9}$)|(^\d{5}-\d{4}$)/;
+
+    if (!pattern.test(form.email.value.toLowerCase())) {
+        swal({
+            title: "Invalid email format!!",
+            text: "The email should have this format user@emailprovider.domain !!",
+            icon: "error",
+            buttons: true,
+        })
+            .then((isOkay) => {
+                if (isOkay) {
+                    form.email.focus();
+                }
+            });
+        return false;
+    } else if (form.pass.value == "") {
+        swal({
+            title: "Password Empty!!!",
+            text: "The password cannot be empty!!",
+            icon: "error",
+            buttons: true,
+        })
+            .then((isOkay) => {
+                if (isOkay) {
+                    form.pass.focus();
+                }
+            });
+        return false;
+    } else if (form.pass_confirm.value == "") {
+        swal({
+            title: "Password Empty!!!",
+            text: "The password cannot be empty!!",
+            icon: "error",
+            buttons: true,
+        })
+            .then((isOkay) => {
+                if (isOkay) {
+                    form.pass_confirm.focus();
+                }
+            });
+        return false;
+    } else if (form.pass.value != form.pass_confirm.value) {
+        swal({
+            title: "Passwords mismatch!!!",
+            text: "The password and the confirmation are different!!",
+            icon: "error",
+            buttons: true,
+        })
+            .then((isOkay) => {
+                if (isOkay) {
+                    form.pass.focus();
+                }
+            });
+        return false;
+    } else if (new Date(form.date_of_birth.value) > today) {
+
+        swal({
+            title: "Wrong birth date!!",
+            text: "The birth date cannot be in the future !!",
+            icon: "error",
+            buttons: true,
+        })
+            .then((isOkay) => {
+                if (isOkay) {
+                    form.date_of_birth.focus();
+                }
+            });
+        return false;
+    } else if (form.weightKG.value < 0) {
+        swal({
+            title: "Wrong weight format!!",
+            text: "The weight cannot be negative o zero !!",
+            icon: "error",
+            buttons: true,
+        })
+            .then((isOkay) => {
+                if (isOkay) {
+                    form.weightKG.focus();
+                }
+            });
+        return false;
+    } else if (!hft.match(regex)) {
+        swal({
+            title: "Wrong height format!!",
+            text: "The introduced height has an invalid format !!",
+            icon: "error",
+            buttons: true,
+        })
+            .then((isOkay) => {
+                if (isOkay) {
+                    form.heightft.focus();
+                }
+            });
+        return false;
+    } else if (!(phoneNumber).match(phoneregex)) {
+        swal({
+            title: "Wrong phone number format!!",
+            text: "The introduced phone number has an invalid format !!",
+            icon: "error",
+            buttons: true,
+        })
+            .then((isOkay) => {
+                if (isOkay) {
+                    form.phoneN.focus();
+                }
+            });
+        return false;
+    } else if (!(form.zip_code.value).match(zipCodeRegex)) {
+        swal({
+            title: "Wrong zip code number format!!",
+            text: "The introduced zip code has an invalid format !!",
+            icon: "error",
+            buttons: true,
+        })
+            .then((isOkay) => {
+                if (isOkay) {
+                    form.zip_code.focus();
+                }
+            });
+        return false;
+    }
+    ``
+
+
+}
+
+function CheckStudy(form) {
+    var SDate = new Date(form.s_date.value);
+    var EDate = new Date(form.e_date.value);
+
+    if (SDate >= EDate) {
+        swal({
+            title: "Wrong dates!!!",
+            text: "The start date can not be older or equal than the end date!!",
+            icon: "error",
+            // buttons: true,
+            // dangerMode: true,
+        })
+            .then((isOkay) => {
+
+                form.s_date.focus();
+
+            });
+        return false;
+    }
+
+    if (form.g_number.value <= 0) {
+        swal({
+            title: "Wrong group number!!!",
+            text: "The group number can not be 0 or lower!!",
+            icon: "error",
+            // buttons: true,
+            // dangerMode: true,
+        })
+            .then((isOkay) => {
+
+                form.g_number.focus();
+
+            });
+        return false;
+    }
+
+    if (form.stipend.value <= 0) {
+        swal({
+            title: "Wrong stipend amount!!!",
+            text: "The stipend amount can not be 0 or lower!!",
+            icon: "error",
+            // buttons: true,
+            // dangerMode: true,
+        })
+            .then((isOkay) => {
+
+                form.stipend.focus();
+
+            });
+        return false;
+    }
+
+    if (form.phaseS.value <= 0) {
+        swal({
+            title: "Wrong phase!!!",
+            text: "The phase can not be 0 or lower!!",
+            icon: "error",
+            // buttons: true,
+            // dangerMode: true,
+        })
+            .then((isOkay) => {
+
+                form.phaseS.focus();
+
+            });
+        return false;
+    }
+
+    if (form.min_age.value < 0 || form.max_age.value < 0) {
+        swal({
+            title: "Wrong age input!!!",
+            text: "The age can not be 0 or lower!!",
+            icon: "error",
+            // buttons: true,
+            // dangerMode: true,
+        })
+            .then((isOkay) => {
+
+                form.min_age.focus();
+
+            });
+        return false;
+    }
+    if (form.min_age.value >= form.max_age.value) {
+        swal({
+            title: "Wrong age input!!!",
+            text: "The minimum age can not be bigger than maximum age !!",
+            icon: "error",
+            // buttons: true,
+            // dangerMode: true,
+        })
+            .then((isOkay) => {
+
+                form.min_age.focus();
+
+            });
+        return false;
+    }
+    if (form.b_draws.value < 0) {
+        swal({
+            title: "Wrong blood draws amount!!!",
+            text: "The blood draws amount can not be lower than 0!!",
+            icon: "error",
+            // buttons: true,
+            // dangerMode: true,
+        })
+            .then((isOkay) => {
+
+                form.b_draws.focus();
+
+            });
+        return false;
+    }
+
+    if (form.actionF.value == 'upt') {
+        // console.log(form);
+
+        swal({
+            title: "Update study",
+            text: "This study will be Updated",
+            icon: "info",
+            buttons: true,
+        })
+            .then((isOkay) => {
+                if (isOkay) {
+                    form.submit();
+                }
+            });
+        return false;
+    }
+    if (form.actionF.value == 'add') {
+
+        swal({
+            title: "Do you want to add a new study?",
+            text: "A new study will be added",
+            icon: "info",
+            buttons: true,
+        })
+            .then((isOkay) => {
+                if (isOkay) {
+                    form.submit();
+                }
+            });
+        return false;
+    }
+}
+
+
+function flipCard(element) {
+    var front_square = element.childNodes[1];
+    var front_square_container = front_square.childNodes[1];
+    var back_square = element.childNodes[3];
+    var back_square_container = back_square.childNodes[1];
+    back_square.classList.toggle('square');
+    back_square.classList.toggle('square2');
+    front_square.classList.toggle('square');
+    front_square.classList.toggle('square2');
+    back_square_container.classList.toggle('square-container2');
+    back_square_container.classList.toggle('square-container');
+    front_square_container.classList.toggle('square-container');
+    front_square_container.classList.toggle('square-container2');
+}
+
+
+
+
+

@@ -8,19 +8,19 @@ if (isset($_POST['action']) && $_POST['action'] == 'add') {
     $last_name = $_POST["last_name"];
     $female = $_POST["female"];
     $date_of_birth = $_POST["date_of_birth"];
-    $weight = $_POST["weight"];
-    $height = $_POST["height"];
+    $weight = $_POST["weightKG"];
+    $height = addslashes($_POST["heightft"]);
     $address = $_POST["address"];
     $city = $_POST["city"];
     $state = $_POST["state"];
     $zip_code = $_POST["zip_code"];
     $country = $_POST["country"];
-    $phone = $_POST["phone"];
+    $phone = $_POST["phoneN"];
     $language = $_POST["language"];
     $communication = $_POST["communication"];
     $contact_time = $_POST["contact_time"];
 
-
+    //print_r($height);die;
 // server-side validations
 //email
     $email_user = explode('@', $email);
@@ -52,20 +52,60 @@ if (isset($_POST['action']) && $_POST['action'] == 'add') {
       window.location = "../login-registrer.php"
       </script>';
     }
+
 // pass encrypt md5 sha512 
     $pass = hash('md5', $pass);
     $pass = hash('sha1', $pass . $email);
 
+    $now = date('Y-m-d ', strtotime('NOW'));
+    $birthDate = date($date_of_birth);
+    if ($birthDate > $now) {
+        echo '<script>
+      alert("Birth date connot be future");
+      window.location = "../login-registrer.php"
+      </script>';
+    }
+
+    if ($weight <= 0) {
+        echo '<script>
+      alert("Weight cannot be negative or zero");
+      window.location = "../login-registrer.php"
+      </script>';
+    }
+
+   // print_r(stripslashes($height));
+    if (!preg_match("/^(?!\s*$)(?:(?!0+')\d+')?(?: *(?!0+\")\d+\")?(?: *(?!0+\/)\d+\/(?!0+$)\d+)?$/", stripslashes($height))) {
+        echo '<script>
+      alert("Height has an incorrect format");
+      window.location = "../login-registrer.php"
+      </script>';
+    }
+
+    if (!preg_match("/^\+((?:9[679]|8[035789]|6[789]|5[90]|42|3[578]|2[1-689])|9[0-58]|8[1246]|6[0-6]|5[1-8]|4[013-9]|3[0-469]|2[70]|7|1)(?:\W*\d){0,13}\d$/", $phone)) {
+        echo '<script>
+      alert("The phone number has an incorrect format");
+      window.location = "../login-registrer.php"
+      </script>';
+    }
+
+    if (!preg_match("/(^\d{5}$)|(^\d{9}$)|(^\d{5}-\d{4}$)/", $zip_code)) {
+        echo '<script>
+      alert("The zip code has an incorrect format");
+      window.location = "../login-registrer.php"
+      </script>';
+    }
+
     $QUERY = " INSERT INTO customers
        (`email`, `password`, `first_name`, `last_name`, `date_of_birth`, `female`, `weight`, `height`, `address`, `city`,
-       `state`, `zip_code`, `country`, `phone`, `language`, `communication`, `contact_time`)
+       `state`, `zip_code`, `country`, `phone`, `language`, `communication`, `contact_time`,`is_admin`, `admin_stand`)
        VALUES ('$email','$pass','$first_name','$last_name','$date_of_birth', $female , $weight,'$height','$address','$city','$state',
-      '$zip_code','$country','$phone','$language', '$communication','$contact_time')";
+      '$zip_code','$country','$phone','$language', '$communication','$contact_time',0,0)";
 
+//print_r($QUERY);DIE;
     $execute = mysqli_query($connection, $QUERY);
     if ($execute) {
         echo '<script>
-      alert("Your user was inserted");
+     // alert("Your user was inserted");
       window.location = "../index.php"
       </script>';
     } else {
@@ -94,14 +134,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'upt') {
     $last_name = $_POST["last_name"];
     $female = $_POST["female"];
     $date_of_birth = $_POST["date_of_birth"];
-    $weight = $_POST["weight"];
-    $height = $_POST["height"];
+    $weight = $_POST["weightKG"];
+    $height = addslashes($_POST["heightft"]);
     $address = $_POST["address"];
     $city = $_POST["city"];
     $state = $_POST["state"];
     $zip_code = $_POST["zip_code"];
     $country = $_POST["country"];
-    $phone = $_POST["phone"];
+    $phone = $_POST["phoneN"];
     $language = $_POST["language"];
     $communication = $_POST["communication"];
     $contact_time = $_POST["contact_time"];
@@ -125,12 +165,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'upt') {
         }
         $email_check_query = "select * from customers where email = '$email' and pk_customers != {$pk_customer}";
         $check_unique_email = mysqli_query($connection, $email_check_query);
-        if (mysqli_num_rows($check_unique_email) > 0) {
-            echo '<script>
-      alert("email address already used");
-      window.location = "../pages/user_management.php"
-      </script>';
-        }
+
         if ($pass != $pass_confirm) {
             echo '<script>
       alert("password and password confirmation fields should match");
@@ -151,7 +186,43 @@ if (isset($_POST['action']) && $_POST['action'] == 'upt') {
         $pass = hash('md5', $pass);
         $pass = hash('sha1', $pass . $email);
     }
+    $now = date('Y-m-d ', strtotime('NOW'));
+    $birthDate = date($date_of_birth);
+    if ($birthDate > $now) {
+        echo '<script>
+      alert("Birth date connot be future");
+      window.location = "../login-registrer.php"
+      </script>';
+    }
 
+    if ($weight <= 0) {
+        echo '<script>
+      alert("Weight cannot be negative or zero");
+      window.location = "../login-registrer.php"
+      </script>';
+    }
+
+    // print_r(stripslashes($height));
+    if (!preg_match("/^(?!\s*$)(?:(?!0+')\d+')?(?: *(?!0+\")\d+\")?(?: *(?!0+\/)\d+\/(?!0+$)\d+)?$/", stripslashes($height))) {
+        echo '<script>
+      alert("Height has an incorrect format");
+      window.location = "../login-registrer.php"
+      </script>';
+    }
+
+    if (!preg_match("/^\+((?:9[679]|8[035789]|6[789]|5[90]|42|3[578]|2[1-689])|9[0-58]|8[1246]|6[0-6]|5[1-8]|4[013-9]|3[0-469]|2[70]|7|1)(?:\W*\d){0,13}\d$/", $phone)) {
+        echo '<script>
+      alert("The phone number has an incorrect format");
+      window.location = "../login-registrer.php"
+      </script>';
+    }
+
+    if (!preg_match("/(^\d{5}$)|(^\d{9}$)|(^\d{5}-\d{4}$)/", $zip_code)) {
+        echo '<script>
+      alert("The zip code has an incorrect format");
+      window.location = "../login-registrer.php"
+      </script>';
+    }
     //do insert query, then the delete query
     $update = "UPDATE `customers` 
 SET `email`='{$email }',`first_name`='{$first_name}',`last_name`='{$last_name }',
@@ -187,12 +258,12 @@ SET `email`='{$email }',`first_name`='{$first_name}',`last_name`='{$last_name }'
     } else {
         if ($is_admin == 1) {
             echo "<script>
-      alert('something bad happens ')
+     // alert('something bad happens ')
      window.location = \"../pages/user_management.php\"
       </script>";
         } else {
             echo "<script>
-      alert('something bad happens ')
+    //  alert('something bad happens ')
       window.location = '../index.php'
       </script>";
         }
@@ -214,7 +285,7 @@ SET  `is_admin`={$is_admin}
         $execute = mysqli_query($connection, $update);
 
     } else if ($admin_stand == 1 && $is_admin == 0) {
-        $is_admin=1;
+        $is_admin = 1;
         $update = "UPDATE `customers` 
 SET  `is_admin`={$is_admin}
  where `pk_customers`= {$pk_customer} ";
