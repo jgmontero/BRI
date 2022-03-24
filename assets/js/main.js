@@ -927,7 +927,14 @@ function CheckStudy(form) {
             });
         return false;
     }
-    if (form.min_age.value >= form.max_age.value) {
+
+    console.log('Age min');
+    console.log(form.min_age.value);
+    console.log('Age max');
+    console.log(form.max_age.value);
+
+    if ((form.min_age.value - form.max_age.value)>=0 ) {
+
         swal({
             title: "Wrong age input!!!",
             text: "The minimum age can not be bigger than maximum age !!",

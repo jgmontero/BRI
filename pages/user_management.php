@@ -2,6 +2,12 @@
 session_start();
 include "../backend/db_connection.php";
 
+if (!isset($_SESSION['user'])) {
+    echo '<script>
+    window.location = "../index.php"
+    </script>';
+}
+
 ?>
 
 <!DOCTYPE html>
