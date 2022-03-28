@@ -162,16 +162,16 @@ if (!isset($_SESSION['user'])) {
         //stipend filter
         if (!empty($_POST['stipend'])) {
             $stipend = $_POST['stipend'];
-            $where .= " and stipend =  '{$stipend}' " ;
+            $where .= " and stipend =  '{$stipend}' ";
         } else {
-            if (!empty($_POST['stipend_min']) && !empty($_POST['stipend_max'])){
+            if (!empty($_POST['stipend_min']) && !empty($_POST['stipend_max'])) {
                 $stipend_min = $_POST['stipend_min'];
                 $stipend_max = $_POST['stipend_max'];
                 $where .= " and stipend >= '{$stipend_min}' and stipend <= '{$stipend_max}' ";
-            } else if (!empty($_POST['stipend_min']) && empty($_POST['stipend_max'])){
+            } else if (!empty($_POST['stipend_min']) && empty($_POST['stipend_max'])) {
                 $stipend_min = $_POST['stipend_min'];
                 $where .= " and stipend >= '{$stipend_min}' ";
-            }else if (empty($_POST['stipend_min']) && !empty($_POST['stipend_max'])){
+            } else if (empty($_POST['stipend_min']) && !empty($_POST['stipend_max'])) {
 
                 $stipend_max = $_POST['stipend_max'];
                 $where .= " and stipend <= '{$stipend_max}' ";
@@ -179,112 +179,12 @@ if (!isset($_SESSION['user'])) {
         }
 
 
-       // print_r($sql . $where)
+        // print_r($sql . $where)
         ?>
 
         <form method="post" action='../pages/studies_page.php'
               style="margin-bottom: 15px;">
-            <div class="row">
-                <div class="col">
-                    <input type="text" id="title" class="form-control" name="title" onsubmit="return CheckStudy(this)"
-                           placeholder="Title" value="<?php echo !empty($_POST['title']) ? $_POST['title'] : "" ?>"/>
-                </div>
-                <!--range start date-->
-                <div class="col">
-                    <!--ranged start date-->
-                    <div class="col"
-                         id="s_date_range" <?php echo !empty($_POST['s_date']) ? 'style="display: none;"' : 'style="display: block;"' ?> >
-                        <input type="date" id="s_date_range_min_input" class="form-control" name="s_date_min"
-                               value="<?php echo !empty($_POST['s_date_min']) ? $_POST['s_date_min'] : "" ?>"/>
-                        <label for="s_date_range">Minimum start date</label>
-                        <input type="date" id="s_date_range_max_input" class="form-control" name="s_date_max"
-                               value="<?php echo !empty($_POST['s_date_max']) ? $_POST['s_date_max'] : "" ?>"/>
-                        <label for="s_date_range_max">Maximum start date</label>
-                    </div>
-                    <!-- no ranged start date-->
-                    <div class="col"
-                         id="s_date_no_range" <?php echo empty($_POST['s_date']) ? 'style="display: none;"' : 'style="display: block;"' ?>>
-                        <input type="date" id="s_date_no_range_input" class="form-control" name="s_date"
-                               style="display: block;"
-                               value="<?php echo !empty($_POST['s_date']) ? $_POST['s_date'] : "" ?>"/>
-                        <label for="s_date_no_range">Start date</label>
-                    </div>
-
-                    <input type="checkbox" id="is_start_range" name="ranged_s_date" onclick="StartDateRangeToggle()"
-                        <?php echo empty($_POST['s_date']) ? 'checked' : '' ?>>
-                    <label for="is_start_range">Start date range</label>
-                </div>
-                <!--range end date-->
-                <div class="col">
-                    <!--ranged end date-->
-                    <div class="col"
-                         id="e_date_range" <?php echo !empty($_POST['e_date']) ? 'style="display: none;"' : 'style="display: block;"' ?>>
-                        <input type="date" id="e_date_range_min_input" class="form-control" name="e_date_min"
-                               value="<?php echo !empty($_POST['e_date_min']) ? $_POST['e_date_min'] : "" ?>"/>
-
-                        <label for="e_date_range">Minimum end date</label>
-                        <input type="date" id="e_date_range_max_input" class="form-control" name="e_date_max"
-                               value="<?php echo !empty($_POST['e_date_max']) ? $_POST['e_date_max'] : "" ?>"/>
-                        <label for="e_date_range_max">Maximum end date</label>
-                    </div>
-                    <!--no ranged end date-->
-                    <div class="col"
-                         id="e_date_no_range" <?php echo empty($_POST['e_date']) ? 'style="display: none;"' : 'style="display: block;"' ?>>
-                        <input type="date" id="e_date_no_range_input" class="form-control" name="e_date"
-                               style="display: block;"
-                               value="<?php echo !empty($_POST['e_date']) ? $_POST['e_date'] : "" ?>"/>
-                        <label for="e_date_no_range">End date</label>
-                    </div>
-
-
-                    <input type="checkbox" id="is_end_range" name="ranged_e_date" onclick="EndDateRangeToggle()"
-                        <?php echo empty($_POST['e_date']) ? 'checked' : '' ?>>
-                    <label for="is_end_range">End date range</label>
-
-                </div>
-                <!--min age-->
-                <div class="col">
-
-                    <input type="number" id="min_age" class="form-control" placeholder="Minimum age"
-                           name="min_age" value="<?php echo !empty($_POST['min_age']) ? $_POST['min_age'] : "" ?>"/>
-                </div>
-                <!--max age-->
-                <div class="col">
-                    <input type="number" id="max_age" class="form-control" placeholder="Maximum age"
-                           name="max_age" value="<?php echo !empty($_POST['max_age']) ? $_POST['max_age'] : "" ?>"/>
-                </div>
-                <!--ranged stipend-->
-                <div class="col">
-                    <div class="col"
-                         id="stipend_range" <?php echo !empty($_POST['stipend']) ? 'style="display: none;"' : 'style="display: block;"' ?> >
-                        <input type="number" id="stipend_range_min_input" class="form-control" name="stipend_min"
-                               value="<?php echo !empty($_POST['stipend_min']) ? $_POST['stipend_min'] : "" ?>"
-                               placeholder="Minimum stipend"/>
-
-                        <input type="number" id="stipend_range_max_input" class="form-control" name="stipend_max"
-                               value="<?php echo !empty($_POST['stipend_max']) ? $_POST['stipend_max'] : "" ?>"
-                               placeholder="Maximum stipend"/>
-
-                    </div>
-                    <!-- no ranged stipend-->
-                    <div class="col"
-                         id="stipend_no_range" <?php echo empty($_POST['stipend']) ? 'style="display: none;"' : 'style="display: block;"' ?>>
-
-                        <input type="number" id="stipend_input" class="form-control" placeholder="Stipend"
-                               name="stipend" value="<?php echo !empty($_POST['stipend']) ? $_POST['stipend'] : "" ?>"/>
-                    </div>
-
-
-                    <input type="checkbox" id="is_stipend_range" name="ranged_stipend" onclick="StipendRangeToggle()"
-                        <?php echo empty($_POST['stipend']) ? 'checked' : '' ?>>
-                    <label for="is_stipend_range">Stipend range</label>
-
-                </div>
-
-
-            </div>
-
-            <div class="row">
+            <div class="row" style="width: 95%">
                 <div class="col">
                     <button class="btn btn-info " style="cursor: pointer;" id="search_btn">
                         Search
@@ -294,6 +194,121 @@ if (!isset($_SESSION['user'])) {
                     </button>
                 </div>
             </div>
+
+            <div class="row" style="width: 95%;border: solid 1px aquamarine;margin: 5px 5px;">
+                <div class="col" style="margin: inherit">
+                    <input type="text" id="title" class="form-control" name="title" onsubmit="return CheckStudy(this)"
+                           placeholder="Title" value="<?php echo !empty($_POST['title']) ? $_POST['title'] : "" ?>"/>
+                </div>
+
+            </div>
+
+            <div class="row" style="width: 95%;border: solid 1px aquamarine;margin: 5px 5px;">
+                <!--range start date-->
+                <div class="col" style="margin: inherit">
+                    <!--ranged start date-->
+                    <div class="col"
+                         id="s_date_range" <?php echo empty($_POST['s_date']) ? 'style="display: none;"' : 'style="display: block;"' ?> >
+                        <label for="s_date_range">Minimum start date</label>
+                        <input type="date" id="s_date_range_min_input" class="form-control" name="s_date_min"
+                               value="<?php echo !empty($_POST['s_date_min']) ? $_POST['s_date_min'] : "" ?>"/>
+
+                        <label for="s_date_range_max">Maximum start date</label>
+                        <input type="date" id="s_date_range_max_input" class="form-control" name="s_date_max"
+                               value="<?php echo !empty($_POST['s_date_max']) ? $_POST['s_date_max'] : "" ?>"/>
+
+                    </div>
+                    <!-- no ranged start date-->
+                    <div class="col"
+                         id="s_date_no_range" <?php echo !empty($_POST['s_date']) ? 'style="display: none;"' : 'style="display: block;"' ?>>
+                        <label for="s_date_no_range">Start date</label>
+                        <input type="date" id="s_date_no_range_input" class="form-control" name="s_date"
+                               style="display: block;"
+                               value="<?php echo !empty($_POST['s_date']) ? $_POST['s_date'] : "" ?>"/>
+
+                    </div>
+                    <label for="is_start_range">Start date range</label>
+                    <input type="checkbox" id="is_start_range" name="ranged_s_date" onclick="StartDateRangeToggle()"
+                        <?php echo !empty($_POST['s_date']) ? 'checked' : '' ?>>
+
+                </div>
+                <!--range end date-->
+                <div class="col" style="margin: inherit">
+                    <!--ranged end date-->
+                    <div class="col"
+                         id="e_date_range" <?php echo empty($_POST['e_date']) ? 'style="display: none;"' : 'style="display: block;"' ?>>
+                        <label for="e_date_range">Minimum end date</label>
+                        <input type="date" id="e_date_range_min_input" class="form-control" name="e_date_min"
+                               value="<?php echo !empty($_POST['e_date_min']) ? $_POST['e_date_min'] : "" ?>"/>
+
+
+                        <label for="e_date_range_max">Maximum end date</label>
+                        <input type="date" id="e_date_range_max_input" class="form-control" name="e_date_max"
+                               value="<?php echo !empty($_POST['e_date_max']) ? $_POST['e_date_max'] : "" ?>"/>
+
+                    </div>
+                    <!--no ranged end date-->
+                    <div class="col"
+                         id="e_date_no_range" <?php echo !empty($_POST['e_date']) ? 'style="display: none;"' : 'style="display: block;"' ?>>
+                        <label for="e_date_no_range">End date</label>
+                        <input type="date" id="e_date_no_range_input" class="form-control" name="e_date"
+                               style="display: block;"
+                               value="<?php echo !empty($_POST['e_date']) ? $_POST['e_date'] : "" ?>"/>
+
+                    </div>
+
+                    <label for="is_end_range">End date range</label>
+                    <input type="checkbox" id="is_end_range" name="ranged_e_date" onclick="EndDateRangeToggle()"
+                        <?php echo !empty($_POST['e_date']) ? 'checked' : '' ?>>
+
+
+                </div>
+            </div>
+
+            <div class="row" style="width: 95%;border: solid 1px aquamarine;margin: 5px 5px;">
+                <!--min age-->
+                <div class="col">
+                    <input type="number" id="min_age" class="form-control" placeholder="Minimum age"
+                           name="min_age" value="<?php echo !empty($_POST['min_age']) ? $_POST['min_age'] : "" ?>"/>
+                </div>
+                <!--max age-->
+                <div class="col">
+                    <input type="number" id="max_age" class="form-control" placeholder="Maximum age"
+                           name="max_age" value="<?php echo !empty($_POST['max_age']) ? $_POST['max_age'] : "" ?>"/>
+                </div>
+            </div>
+
+            <div class="row" style="width: 95%;border: solid 1px aquamarine;margin: 5px 5px;">
+                <!--ranged stipend-->
+                <div class="col">
+                    <div class="col"
+                         id="stipend_range" <?php echo empty($_POST['stipend']) ? 'style="display: none;"' : 'style="display: block;"' ?> >
+                        <label></label>
+                        <input type="number" id="stipend_range_min_input" class="form-control" name="stipend_min"
+                               value="<?php echo !empty($_POST['stipend_min']) ? $_POST['stipend_min'] : "" ?>"
+                               placeholder="Minimum stipend"/>
+                        <label></label>
+                        <input type="number" id="stipend_range_max_input" class="form-control" name="stipend_max"
+                               value="<?php echo !empty($_POST['stipend_max']) ? $_POST['stipend_max'] : "" ?>"
+                               placeholder="Maximum stipend"/>
+
+                    </div>
+                    <!-- no ranged stipend-->
+                    <div class="col"
+                         id="stipend_no_range" <?php echo !empty($_POST['stipend']) ? 'style="display: none;"' : 'style="display: block;"' ?>>
+                        <label></label>
+                        <input type="number" id="stipend_input" class="form-control" placeholder="Stipend"
+                               name="stipend" value="<?php echo !empty($_POST['stipend']) ? $_POST['stipend'] : "" ?>"/>
+                    </div>
+
+
+                    <input type="checkbox" id="is_stipend_range" name="ranged_stipend" onclick="StipendRangeToggle()"
+                        <?php echo !empty($_POST['stipend']) ? 'checked' : '' ?>>
+                    <label for="is_stipend_range">Stipend range</label>
+
+                </div>
+            </div>
+
         </form>
 
         <div class="container" style="margin-left: 1px;overflow-x: auto; max-width: 98%">
@@ -309,7 +324,7 @@ if (!isset($_SESSION['user'])) {
             </form>
             <table class="table dataTable table-dark table-striped table-hover">
                 <thead>
-                <tr style="font-size: x-small;text-align: center;">
+                <tr style="font-size: unset;text-align: center;">
                     <th scope="col">svrkey</th>
                     <th scope="col">Study number</th>
                     <th scope="col">Title</th>
@@ -352,12 +367,12 @@ if (!isset($_SESSION['user'])) {
 
                 //($count%2)==0 ? $pagesT-=1 : '';
 
-               // print_r(" offset_num  ".$offset_num." pagesT ".$pagesT.' limit_num '.$limit_num);
+                // print_r(" offset_num  ".$offset_num." pagesT ".$pagesT.' limit_num '.$limit_num);
 
-                $resultSet = mysqli_query($connection, $sql . $where. $limit . $offset);
+                $resultSet = mysqli_query($connection, $sql . $where . $limit . $offset);
 
                 while ($row = mysqli_fetch_row($resultSet)) { ?>
-                    <tr style="font-size: x-small;text-align: center;">
+                    <tr style="font-size: unset;text-align: center;">
                         <td><?php echo $row[0]; ?></td>
                         <td><?php echo $row[4]; ?></td>
                         <td><?php echo $row[1]; ?></td>
@@ -384,7 +399,8 @@ if (!isset($_SESSION['user'])) {
                                 <input type="hidden" id="delete_pk_studies" style="cursor: pointer;"
                                        name="pk_studies"
                                        value="<?php echo $row[18]; ?>"/>
-                                <button class="btn btn-danger " style="cursor: pointer;font-size: x-small;text-align: center;" id="delete_btn">
+                                <button class="btn btn-danger "
+                                        style="cursor: pointer;font-size:unset;text-align: center;" id="delete_btn">
                                     Delete
                                 </button>
                             </form>
@@ -398,7 +414,8 @@ if (!isset($_SESSION['user'])) {
                                 <input type="hidden" id="upt_pk_studies" style="cursor: pointer;"
                                        name="pk_studies"
                                        value="<?php echo $row[18]; ?>"/>
-                                <button class="btn btn-success " style="cursor: pointer;font-size: x-small;text-align: center;" id="update_btn">
+                                <button class="btn btn-success "
+                                        style="cursor: pointer;font-size:unset;text-align: center;" id="update_btn">
                                     Update
                                 </button>
                             </form>
@@ -418,7 +435,7 @@ if (!isset($_SESSION['user'])) {
             <!--First page button-->
             <form method="post" action="#" style="width: 30px;cursor: pointer;
             <?php echo $offset_num == 0 ? "display: none;" : "display: block"; ?>
-                ">
+                    ">
                 <input type="hidden" id="r_p_pages" name="offset"
                        placeholder="" style="width: 4rem;"
                        value=<?php echo 0 ?>>

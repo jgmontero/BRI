@@ -61,7 +61,11 @@ if (isset($_SESSION['user'])) {
                     }
                 }
                 ?>
-                <button>Login</button>
+                <div class="row" style="display: flex;flex-direction: column;text-align: center;">
+                    <button>Login</button>
+                    <a href="../pages/forgotPasswordPage.php" class="logo me-auto me-lg-0">Forgot password?</a>
+                </div>
+
             </form>
 
             <!--Register-->

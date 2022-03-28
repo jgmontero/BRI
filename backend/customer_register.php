@@ -81,7 +81,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'add') {
       </script>';
     }
 
-    if (!preg_match("/^\+((?:9[679]|8[035789]|6[789]|5[90]|42|3[578]|2[1-689])|9[0-58]|8[1246]|6[0-6]|5[1-8]|4[013-9]|3[0-469]|2[70]|7|1)(?:\W*\d){0,13}\d$/", $phone)) {
+    if (!preg_match("/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im", $phone)) {
         echo '<script>
       alert("The phone number has an incorrect format");
       window.location = "../login-registrer.php"

@@ -697,6 +697,39 @@ function CheckLogin(form) {
 
 }
 
+function CheckForgotPassword(form) {
+
+    const pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    // var pass = form.pass.value;
+    if (form.email.value == "") {
+        swal({
+            title: "User Empty",
+            text: "The user cannot be empty!!",
+            icon: "error",
+            buttons: true,
+        })
+            .then((isOkay) => {
+                if (isOkay) {
+                    form.email.focus();
+                }
+            });
+        return false;
+    } else if (!pattern.test(form.email.value.toLowerCase())) {
+        swal({
+            title: "Invalid email format!!",
+            text: "The email should have this format user@emailprovider.domain !!",
+            icon: "error",
+            buttons: true,
+        })
+            .then((isOkay) => {
+                if (isOkay) {
+                    form.email.focus();
+                }
+            });
+        return false;
+    }
+}
 
 function CheckRegister(form) {
 
@@ -716,7 +749,7 @@ function CheckRegister(form) {
     var today = new Date(mm + '/' + dd + '/' + yyyy);
     var hft = form.heightft.value;
     var regex = /^(?!\s*$)(?:(?!0+')\d+')?(?: *(?!0+")\d+")?(?: *(?!0+\/)\d+\/(?!0+$)\d+)?$/;
-    var phoneregex = /^\+((?:9[679]|8[035789]|6[789]|5[90]|42|3[578]|2[1-689])|9[0-58]|8[1246]|6[0-6]|5[1-8]|4[013-9]|3[0-469]|2[70]|7|1)(?:\W*\d){0,13}\d$/;
+    var phoneregex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
     var phoneNumber = form.phoneN.value;
     var zipCodeRegex = /(^\d{5}$)|(^\d{9}$)|(^\d{5}-\d{4}$)/;
 

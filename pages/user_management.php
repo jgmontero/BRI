@@ -157,65 +157,6 @@ if (!isset($_SESSION['user'])) {
         <form method="post" action='../pages/user_management.php'
               style="margin-bottom: 15px;">
             <div class="row">
-                <!--email filter-->
-                <div class="col">
-                    <input type="text" id="email" class="form-control" name="email"
-                           placeholder="Email" value="<?php echo !empty($_POST['email']) ? $_POST['email'] : "" ?>"/>
-                </div>
-                <!--first name filter-->
-                <div class="col">
-                    <input type="text" id="f_name" class="form-control" name="f_name"
-                           placeholder="First name"
-                           value="<?php echo !empty($_POST['f_name']) ? $_POST['f_name'] : "" ?>"/>
-                </div>
-                <!--last name filter-->
-                <div class="col">
-                    <input type="text" id="l_name" class="form-control" name="l_name"
-                           placeholder="Last name"
-                           value="<?php echo !empty($_POST['l_name']) ? $_POST['l_name'] : "" ?>"/>
-                </div>
-                <!--City name filter-->
-                <div class="col">
-                    <input type="text" id="city" class="form-control" name="city"
-                           placeholder="City" value="<?php echo !empty($_POST['city']) ? $_POST['city'] : "" ?>"/>
-                </div>
-                <!--State name filter-->
-                <div class="col">
-                    <input type="text" id="state" class="form-control" name="state"
-                           placeholder="State" value="<?php echo !empty($_POST['state']) ? $_POST['state'] : "" ?>"/>
-                </div>
-                <!--Country name filter-->
-                <div class="col">
-                    <input type="text" id="country" class="form-control" name="country"
-                           placeholder="Country"
-                           value="<?php echo !empty($_POST['country']) ? $_POST['country'] : "" ?>"/>
-                </div>
-                <!--Bithdate filter-->
-                <div class="col">
-                    <div class="col"
-                         id="b_date_range" <?php echo !empty($_POST['b_date']) ? 'style="display: none;"' : 'style="display: block;"' ?> >
-                        <input type="date" id="b_date_range_min_input" class="form-control" name="b_date_min"
-                               value="<?php echo !empty($_POST['b_date_min']) ? $_POST['b_date_min'] : "" ?>"/>
-                        <label for="b_date_range">Minimum birth date</label>
-                        <input type="date" id="b_date_range_max_input" class="form-control" name="b_date_max"
-                               value="<?php echo !empty($_POST['b_date_max']) ? $_POST['b_date_max'] : "" ?>"/>
-                        <label for="b_date_range_max">Maximum birth date</label>
-                    </div>
-                    <!-- no ranged start date-->
-                    <div class="col"
-                         id="b_date" <?php echo empty($_POST['b_date']) ? 'style="display: none;"' : 'style="display: block;"' ?>>
-                        <input type="date" id="b_date_input" class="form-control" name="b_date"
-                               style="display: block;"
-                               value="<?php echo !empty($_POST['b_date']) ? $_POST['b_date'] : "" ?>"/>
-                        <label for="b_date">Birth date</label>
-                    </div>
-
-                    <input type="checkbox" id="is_b_date_range" name="ranged_b_date" onclick="BDateRangeToggle()"
-                        <?php echo empty($_POST['b_date']) ? 'checked' : '' ?>>
-                    <label for="is_b_date_range">Birth date range</label>
-                </div>
-            </div>
-            <div class="row">
                 <div class="col">
                     <button class="btn btn-info " style="cursor: pointer;" id="search_btn">
                         Search
@@ -226,6 +167,79 @@ if (!isset($_SESSION['user'])) {
                     </button>
                 </div>
             </div>
+            <div class="row" style="width: 95%;border: solid 1px aquamarine;margin: 5px 5px;"
+            ">
+            <!--email filter-->
+            <div class="col" style="margin: inherit">
+                <input type="text" id="email" class="form-control" name="email"
+                       placeholder="Email" value="<?php echo !empty($_POST['email']) ? $_POST['email'] : "" ?>"/>
+            </div>
+            </div>
+            <div class="row" style="width: 95%;border: solid 1px aquamarine;margin: 5px 5px;"
+            ">
+            <!--first name filter-->
+            <div class="col" style="margin: inherit">
+                <input type="text" id="f_name" class="form-control" name="f_name"
+                       placeholder="First name"
+                       value="<?php echo !empty($_POST['f_name']) ? $_POST['f_name'] : "" ?>"/>
+            </div>
+            <!--last name filter-->
+            <div class="col" style="margin: inherit">
+                <input type="text" id="l_name" class="form-control" name="l_name"
+                       placeholder="Last name"
+                       value="<?php echo !empty($_POST['l_name']) ? $_POST['l_name'] : "" ?>"/>
+            </div>
+            </div>
+
+            <div class="row" style="width: 95%;border: solid 1px aquamarine;margin: 5px 5px;"
+            ">
+            <!--City name filter-->
+            <div class="col" style="margin: inherit">
+                <input type="text" id="city" class="form-control" name="city"
+                       placeholder="City" value="<?php echo !empty($_POST['city']) ? $_POST['city'] : "" ?>"/>
+            </div>
+            <!--State name filter-->
+            <div class="col" style="margin: inherit">
+                <input type="text" id="state" class="form-control" name="state"
+                       placeholder="State" value="<?php echo !empty($_POST['state']) ? $_POST['state'] : "" ?>"/>
+            </div>
+            </div>
+            <div class="row" style="width: 95%;border: solid 1px aquamarine;margin: 5px 5px;"
+            ">
+            <!--Country name filter-->
+            <div class="col" style="margin: inherit">
+                <label></label>
+                <input type="text" id="country" class="form-control" name="country"
+                       placeholder="Country"
+                       value="<?php echo !empty($_POST['country']) ? $_POST['country'] : "" ?>"/>
+            </div>
+            <!--Bithdate filter-->
+            <div class="col" style="margin: inherit">
+                <label></label>
+                <div class="col"
+                     id="b_date_range" <?php echo empty($_POST['b_date']) ? 'style="display: none;"' : 'style="display: block;"' ?> >
+                    <label for="b_date_range">Minimum birth date</label>
+                    <input type="date" id="b_date_range_min_input" class="form-control" name="b_date_min"
+                           value="<?php echo !empty($_POST['b_date_min']) ? $_POST['b_date_min'] : "" ?>"/>
+                    <label for="b_date_range_max">Maximum birth date</label>
+                    <input type="date" id="b_date_range_max_input" class="form-control" name="b_date_max"
+                           value="<?php echo !empty($_POST['b_date_max']) ? $_POST['b_date_max'] : "" ?>"/>
+
+                </div>
+                <!-- no ranged start date-->
+                <div class="col"
+                     id="b_date" <?php echo !empty($_POST['b_date']) ? 'style="display: none;"' : 'style="display: block;"' ?>>
+                    <input type="date" id="b_date_input" class="form-control" name="b_date"
+                           style="display: block;"
+                           value="<?php echo !empty($_POST['b_date']) ? $_POST['b_date'] : "" ?>"/>
+                </div>
+                <label for="is_b_date_range">Birth date range</label>
+                <input type="checkbox" id="is_b_date_range" name="ranged_b_date" onclick="BDateRangeToggle()"
+                    <?php echo empty($_POST['b_date']) ? 'checked' : '' ?>>
+
+            </div>
+            </div>
+
         </form>
 
         <div class="container" style="margin-left: 1px;overflow-x: auto; max-width: 98%">
@@ -242,7 +256,7 @@ if (!isset($_SESSION['user'])) {
             </form>
             <table class="table dataTable table-dark table-striped table-hover ">
                 <thead>
-                <tr style="font-size: x-small;text-align: center;">
+                <tr style="font-size: unset;text-align: center;">
 
                     <th scope="col">Email</th>
                     <th scope="col">Full name</th>
@@ -284,7 +298,7 @@ if (!isset($_SESSION['user'])) {
                 $resultSet = mysqli_query($connection, $sql . $where . $limit . $offset);
 
                 while ($row = mysqli_fetch_row($resultSet)) { ?>
-                    <tr style="font-size: x-small;text-align: center;">
+                    <tr style="font-size: unset;text-align: center;">
                         <td><?php echo $row[0]; ?></td>
                         <td><?php echo $row[2] . " " . $row[3]; ?></td>
                         <td><?php echo $row[4]; ?></td>
@@ -311,7 +325,7 @@ if (!isset($_SESSION['user'])) {
                                        name="pk_customer"
                                        value="<?php echo $row[17]; ?>"/>
                                 <button class="btn btn-danger "
-                                        style="cursor: pointer;font-size: x-small;text-align: center;"
+                                        style="cursor: pointer;font-size: unset;text-align: center;"
                                         id="delete_customer_btn">
                                     Delete
                                 </button>
@@ -330,7 +344,7 @@ if (!isset($_SESSION['user'])) {
                                        name="is_admin"
                                        value="<?php echo $row[18]; ?>"/>
                                 <button class="btn btn-success "
-                                        style="cursor: pointer;font-size: x-small;text-align: center;"
+                                        style="cursor: pointer;font-size: unset;text-align: center;"
                                         id="update_customer_btn">
                                     Update
                                 </button>
@@ -350,7 +364,7 @@ if (!isset($_SESSION['user'])) {
                                        name="admin_stand"
                                        value="<?php echo $row[19]; ?>"/>
                                 <button class="btn btn-success "
-                                        style="cursor: pointer;font-size: x-small;text-align: center;"
+                                        style="cursor: pointer;font-size: unset;text-align: center;"
                                         id="admin_customer_btn">
                                     <?php echo $row[18] == 0 ? "Make admin" : "Remove Admin" ?>
                                 </button>
@@ -435,7 +449,7 @@ if (!isset($_SESSION['user'])) {
 <?php echo $offset_num == $pagesT * $limit_num ? "display: none;" : "display: block"; ?>">
                 <input type="hidden" id="r_p_pages" name="offset"
                        placeholder=""
-                value=<?php echo $pagesT * $limit_num ?>>
+                       value=<?php echo $pagesT * $limit_num ?>>
 
                 <input type="hidden" id="r_p_pages" name="RowPerPage"
                        placeholder="" style="width: 4rem;"
